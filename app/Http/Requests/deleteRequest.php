@@ -24,14 +24,14 @@ class deleteRequest extends FormRequest
     public function rules()
     {
         return [
-            'id[]' => 'required'
+            'id' => 'required'
         ];
     }
 
     public function messages()
     {
         return[
-            'id[].required' => 'Nothing to delete.'
+            'id.required' => 'Nothing to delete.'
         ];
     }
 }

@@ -9,11 +9,8 @@
 	<title>Scandiweb website</title>
 </head>
 <body>
-	@include('inc.header')
-	<div class="container">
-		@include('inc.messages')
-
-    	@yield('content')
-	</div>
+	@include('inc.messages')
+	<div id="root"></div>
+    @yield('content')
 </body>
 </html>
