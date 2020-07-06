@@ -26,7 +26,6 @@ export default class Category extends Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state);
         axios({
             method: 'post',
             url: '/api/addCategories/submit',

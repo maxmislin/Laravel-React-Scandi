@@ -8,9 +8,7 @@ export default class FormSwitch extends Component {
         this.initialState = {
             categories: [],
             attributes: [],
-            isHidden: false,
-            aName: '',
-            aValue: ''
+            productAttributes:{}
         }
 
         this.state = this.initialState;
@@ -32,13 +30,29 @@ export default class FormSwitch extends Component {
 
     handleChange(event) {
         event.preventDefault();
-        this.setState({aName:event.target.name, aValue: event.target.value});
-        this.props.ApplyCallback(event.target.name, event.target.value, this.state.isHidden);
+        if (!this.state.productAttributes[event.target.name]){
+            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:event.target.value, isHidden: false}}
+            this.setState({productAttributes: newAttr});
+            this.props.ApplyCallback(event.target.name, event.target.value, false);
+        }
+        else {
+            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:event.target.value, isHidden: this.state.productAttributes[event.target.name].isHidden}}
+            this.setState({productAttributes: newAttr});
+            this.props.ApplyCallback(event.target.name, event.target.value, this.state.productAttributes[event.target.name].isHidden);
+        }
     }
 
     handleChangeCbox(event) {
-        this.setState({isHidden: event.target.checked});
-        this.props.ApplyCallback(this.state.aName, this.state.aValue, event.target.checked);
+        if (!this.state.productAttributes[event.target.name]){
+            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:"", isHidden: event.target.checked}}
+            this.setState({productAttributes: newAttr});
+            this.props.ApplyCallback(event.target.name, "", event.target.checked);
+        }
+        else {
+            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:this.state.productAttributes[event.target.name].value, isHidden: event.target.checked}}
+            this.setState({productAttributes: newAttr})
+            this.props.ApplyCallback(event.target.name, this.state.productAttributes[event.target.name].value, event.target.checked);
+        }
     }
 
     render() {
@@ -56,9 +70,9 @@ export default class FormSwitch extends Component {
                                         ) : (
                                         <p>{"Please, enter " + attribute.aName}</p>
                                         )}
-                                        <input type="text" className="form-control" name={this.state.aName = attribute.aName} value={this.state.aValue} onChange={this.handleChange} required="" />
+                                        <input type="text" className="form-control" name={attribute.aName} onChange={this.handleChange} required="" />
                                         <label htmlFor="hidden" className="mt-2">Hidden</label>
-                                        <input type="checkbox" className="ml-1" name="hidden" onChange={this.handleChangeCbox} required="" />
+                                        <input type="checkbox" className="ml-1" name={attribute.aName} onChange={this.handleChangeCbox} required="" />
                                         
                                     </div>
                                 )

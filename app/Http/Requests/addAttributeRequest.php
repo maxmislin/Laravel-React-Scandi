@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Category;
 
 class addAttributeRequest extends FormRequest
 {
@@ -23,8 +24,10 @@ class addAttributeRequest extends FormRequest
      */
     public function rules()
     {
+        $category = Category::where('name', '=', $this->categoryName)->first();
+        
         return [
-            'name' => 'required|min:3|max:20|unique:App\Models\Attribute,aName,category_id',
+            'name' => 'required|min:3|max:20|unique:App\Models\Attribute,aName,NULL,id,category_id,'.$category->id,
             'min' => 'nullable|numeric',
             'max' => 'nullable|numeric'
         ];

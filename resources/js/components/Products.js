@@ -31,7 +31,6 @@ export default class App extends Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state);
         axios({
             method: 'post',
             url: '/api/delete',
@@ -41,6 +40,7 @@ export default class App extends Component {
             if(response.statusText == "OK")
             {
                 this.reload();
+                this.setState({id: []});
 
                 ReactDOM.render(
                     (    
@@ -52,7 +52,6 @@ export default class App extends Component {
             }
         })
         .catch(error => {
-            console.log(error.response);
             if (error.response.status == 422){
                 var errors = error.response.data.errors;
                 ReactDOM.render(<Errors errors={errors} />,document.getElementById("indexMsg"))

@@ -70157,7 +70157,6 @@ var Category = /*#__PURE__*/function (_Component) {
     value: function handleSubmit(event) {
       var _this2 = this;
 
-      console.log(this.state);
       axios__WEBPACK_IMPORTED_MODULE_3___default()({
         method: 'post',
         url: '/api/addCategories/submit',
@@ -70641,6 +70640,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -70678,9 +70683,7 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
     _this.initialState = {
       categories: [],
       attributes: [],
-      isHidden: false,
-      aName: '',
-      aValue: ''
+      productAttributes: {}
     };
     _this.state = _this.initialState;
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -70706,19 +70709,53 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
     key: "handleChange",
     value: function handleChange(event) {
       event.preventDefault();
-      this.setState({
-        aName: event.target.name,
-        aValue: event.target.value
-      });
-      this.props.ApplyCallback(event.target.name, event.target.value, this.state.isHidden);
+
+      if (!this.state.productAttributes[event.target.name]) {
+        var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
+          value: event.target.value,
+          isHidden: false
+        }));
+
+        this.setState({
+          productAttributes: newAttr
+        });
+        this.props.ApplyCallback(event.target.name, event.target.value, false);
+      } else {
+        var _newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
+          value: event.target.value,
+          isHidden: this.state.productAttributes[event.target.name].isHidden
+        }));
+
+        this.setState({
+          productAttributes: _newAttr
+        });
+        this.props.ApplyCallback(event.target.name, event.target.value, this.state.productAttributes[event.target.name].isHidden);
+      }
     }
   }, {
     key: "handleChangeCbox",
     value: function handleChangeCbox(event) {
-      this.setState({
-        isHidden: event.target.checked
-      });
-      this.props.ApplyCallback(this.state.aName, this.state.aValue, event.target.checked);
+      if (!this.state.productAttributes[event.target.name]) {
+        var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
+          value: "",
+          isHidden: event.target.checked
+        }));
+
+        this.setState({
+          productAttributes: newAttr
+        });
+        this.props.ApplyCallback(event.target.name, "", event.target.checked);
+      } else {
+        var _newAttr2 = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
+          value: this.state.productAttributes[event.target.name].value,
+          isHidden: event.target.checked
+        }));
+
+        this.setState({
+          productAttributes: _newAttr2
+        });
+        this.props.ApplyCallback(event.target.name, this.state.productAttributes[event.target.name].value, event.target.checked);
+      }
     }
   }, {
     key: "render",
@@ -70737,8 +70774,7 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
           }, "Please, enter " + attribute.aName + " in " + attribute.units) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please, enter " + attribute.aName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "text",
             className: "form-control",
-            name: _this3.state.aName = attribute.aName,
-            value: _this3.state.aValue,
+            name: attribute.aName,
             onChange: _this3.handleChange,
             required: ""
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -70747,7 +70783,7 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
           }, "Hidden"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "checkbox",
             className: "ml-1",
-            name: "hidden",
+            name: attribute.aName,
             onChange: _this3.handleChangeCbox,
             required: ""
           }));
@@ -70867,7 +70903,6 @@ var App = /*#__PURE__*/function (_Component) {
     value: function handleSubmit(event) {
       var _this2 = this;
 
-      console.log(this.state);
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
         url: '/api/delete',
@@ -70876,13 +70911,15 @@ var App = /*#__PURE__*/function (_Component) {
         if (response.statusText == "OK") {
           _this2.reload();
 
+          _this2.setState({
+            id: []
+          });
+
           react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "alert alert-success"
           }, "Products deleted"), document.getElementById("indexMsg"));
         }
       })["catch"](function (error) {
-        console.log(error.response);
-
         if (error.response.status == 422) {
           var errors = error.response.data.errors;
           react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_4__["default"], {

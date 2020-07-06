@@ -44,7 +44,7 @@ class applyRequest extends FormRequest
             if ($attribute->numeric)
                 $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|numeric';   
             if ($attribute->unique)
-                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|unique:App\Models\ProductAttribute,atribute,'.$attribute->aName;
+                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|unique:App\Models\ProductAttribute,attribute,'.$attribute->aName;
             if ($attribute->min)
                 $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|min:'.$attribute->min;
             if ($attribute->max)
