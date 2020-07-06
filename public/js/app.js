@@ -70709,53 +70709,32 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
     key: "handleChange",
     value: function handleChange(event) {
       event.preventDefault();
+      var isHiddenValue = this.state.productAttributes[event.target.name] ? this.state.productAttributes[event.target.name].isHidden : false;
 
-      if (!this.state.productAttributes[event.target.name]) {
-        var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
-          value: event.target.value,
-          isHidden: false
-        }));
+      var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
+        value: event.target.value,
+        isHidden: isHiddenValue
+      }));
 
-        this.setState({
-          productAttributes: newAttr
-        });
-        this.props.ApplyCallback(event.target.name, event.target.value, false);
-      } else {
-        var _newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
-          value: event.target.value,
-          isHidden: this.state.productAttributes[event.target.name].isHidden
-        }));
-
-        this.setState({
-          productAttributes: _newAttr
-        });
-        this.props.ApplyCallback(event.target.name, event.target.value, this.state.productAttributes[event.target.name].isHidden);
-      }
+      this.setState({
+        productAttributes: newAttr
+      });
+      this.props.ApplyCallback(event.target.name, event.target.value, isHiddenValue);
     }
   }, {
     key: "handleChangeCbox",
     value: function handleChangeCbox(event) {
-      if (!this.state.productAttributes[event.target.name]) {
-        var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
-          value: "",
-          isHidden: event.target.checked
-        }));
+      var attrValue = this.state.productAttributes[event.target.name] ? this.state.productAttributes[event.target.name].value : "";
 
-        this.setState({
-          productAttributes: newAttr
-        });
-        this.props.ApplyCallback(event.target.name, "", event.target.checked);
-      } else {
-        var _newAttr2 = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
-          value: this.state.productAttributes[event.target.name].value,
-          isHidden: event.target.checked
-        }));
+      var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
+        value: attrValue,
+        isHidden: event.target.checked
+      }));
 
-        this.setState({
-          productAttributes: _newAttr2
-        });
-        this.props.ApplyCallback(event.target.name, this.state.productAttributes[event.target.name].value, event.target.checked);
-      }
+      this.setState({
+        productAttributes: newAttr
+      });
+      this.props.ApplyCallback(event.target.name, attrValue, event.target.checked);
     }
   }, {
     key: "render",

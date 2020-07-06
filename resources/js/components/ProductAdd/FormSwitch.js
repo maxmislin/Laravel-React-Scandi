@@ -30,29 +30,17 @@ export default class FormSwitch extends Component {
 
     handleChange(event) {
         event.preventDefault();
-        if (!this.state.productAttributes[event.target.name]){
-            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:event.target.value, isHidden: false}}
-            this.setState({productAttributes: newAttr});
-            this.props.ApplyCallback(event.target.name, event.target.value, false);
-        }
-        else {
-            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:event.target.value, isHidden: this.state.productAttributes[event.target.name].isHidden}}
-            this.setState({productAttributes: newAttr});
-            this.props.ApplyCallback(event.target.name, event.target.value, this.state.productAttributes[event.target.name].isHidden);
-        }
+        const isHiddenValue = this.state.productAttributes[event.target.name] ? this.state.productAttributes[event.target.name].isHidden : false;
+        const newAttr = {...this.state.productAttributes, [event.target.name]:{value:event.target.value, isHidden: isHiddenValue}}
+        this.setState({productAttributes: newAttr});
+        this.props.ApplyCallback(event.target.name, event.target.value, isHiddenValue);
     }
 
     handleChangeCbox(event) {
-        if (!this.state.productAttributes[event.target.name]){
-            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:"", isHidden: event.target.checked}}
-            this.setState({productAttributes: newAttr});
-            this.props.ApplyCallback(event.target.name, "", event.target.checked);
-        }
-        else {
-            const newAttr = {...this.state.productAttributes, [event.target.name]:{value:this.state.productAttributes[event.target.name].value, isHidden: event.target.checked}}
-            this.setState({productAttributes: newAttr})
-            this.props.ApplyCallback(event.target.name, this.state.productAttributes[event.target.name].value, event.target.checked);
-        }
+        const attrValue = this.state.productAttributes[event.target.name] ? this.state.productAttributes[event.target.name].value : "";
+        const newAttr = {...this.state.productAttributes, [event.target.name]:{value:attrValue, isHidden: event.target.checked}}
+        this.setState({productAttributes: newAttr});
+        this.props.ApplyCallback(event.target.name, attrValue, event.target.checked);
     }
 
     render() {
