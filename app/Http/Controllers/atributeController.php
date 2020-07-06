@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\addAtributeRequest;
 use App\Models\Category;
-use App\Models\Atribute;
+use App\Models\Attribute;
 
 class atributeController extends Controller
 {
     public function submitAtributes(addAtributeRequest $req) {
 
-        $addAtribute = new Atribute();
+        $addAtribute = new Attribute();
         $category = Category::where('name', '=', $req->categoryName)->first();
         $addAtribute->category_id = $category->id;
         $addAtribute->aName = $req->input('name');

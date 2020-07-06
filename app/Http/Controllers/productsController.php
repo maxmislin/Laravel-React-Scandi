@@ -14,6 +14,8 @@ class productsController extends Controller
     }
 
     public function massDelete(deleteRequest $req) {
+
+        //dd($req);
         
 
         foreach($req->id as $id){
@@ -25,7 +27,7 @@ class productsController extends Controller
             
         }
 
-        return redirect()->route('index')->with('success', 'Products deleted');
+        //return redirect()->route('index')->with('success', 'Products deleted');
     }
 
     public function index() {

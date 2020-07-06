@@ -1,9 +1,73 @@
 import React, { Component } from 'react';
 import ProductList from './Products/ProductList';
+import axios from 'axios';
+import ReactDOM from 'react-dom';
+import Errors from './Errors';
 
 export default class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: []
+        }
+
+        this.callbackFunction = this.callbackFunction.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    callbackFunction(id, checked) {
+        if (checked == true)
+            this.setState({ id: [...this.state.id, id] })
+        else{
+            var filteredArray = this.state.id.filter(function(e) { return e !== id });
+            this.setState({id: filteredArray});
+        }
+    }
+
+    reload() {
+        window.location.reload(false);
+    }
+
+    handleSubmit(event) {
+        console.log(this.state);
+        axios({
+            method: 'post',
+            url: '/api/delete',
+            data: this.state
+        })
+        .then(response => {
+            if(response.statusText == "OK")
+            {
+                
+                this.reload();
+
+                ReactDOM.render(
+                    (    
+                        <div class="alert alert-success">
+                            Products deleted
+                        </div>
+                    ),
+                document.getElementById("indexMsg"));
+            }
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error.response);
+            if (error.response.status == 422){
+                var errors = error.response.data.errors;
+                ReactDOM.render(<Errors errors={errors} />,document.getElementById("indexMsg"))
+            }
+            else
+                console.log(error);
+                
+        });
+        
+        event.preventDefault();
+    }
+
     render() {
+        console.log(this.state)
         return (
             <div className="container">
                 <div id="indexMsg"></div>
@@ -16,8 +80,8 @@ export default class App extends Component {
                     </div>
                 </div>
 
-                <form id="cBox" action="{{ route('delete-form') }}" method="post">
-                <ProductList />
+                <form id="cBox" onSubmit={this.handleSubmit}>
+                <ProductList ApplyCallback = {this.callbackFunction} />
                 </form>
             </div>
         );

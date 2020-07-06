@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('product', 'productsController@index');
-Route::post('/delete', 'applyController@massDelete')->name('delete-form');
+Route::post('/delete', 'productsController@massDelete')->name('delete-form');
 //Route::get('/{path?}', 'applyController@allProductData')->name('index');
 //Route::get('/{path?}', 'applyController@allCategoryData')->name('apply');
 Route::post('/apply/submit', 'applyController@submit')->name('apply-form');

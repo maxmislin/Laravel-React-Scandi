@@ -5,7 +5,7 @@ import Header from './components/Header';
 import App from './components/App';
 import Apply from './components/Apply';
 import Category from './components/Category';
-import Atribute from './components/Attribute';
+import Attribute from './components/Attribute';
 
 
 ReactDOM.render(
@@ -15,7 +15,7 @@ ReactDOM.render(
             <Route path="/" exact component={withRouter(App)} />
             <Route path="/apply" exact component={withRouter(Apply)} />
             <Route path="/addCategory" exact component={Category} />
-            <Route path="/addAtribute" exact component={Atribute} />
+            <Route path="/addAtribute" exact component={Attribute} />
         </Switch>
     </Router>)
   , document.getElementById('root'));

@@ -24,7 +24,7 @@ class addAtributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:20|unique:App\Models\Atribute,aName,category_id',
+            'name' => 'required|min:3|max:20|unique:App\Models\Attribute,aName,category_id',
             'min' => 'nullable|numeric',
             'max' => 'nullable|numeric'
         ];

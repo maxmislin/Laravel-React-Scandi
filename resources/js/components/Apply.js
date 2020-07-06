@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link} from 'react-router-dom';
 import FormSwitch from './Products/FormSwitch';
+import axios from 'axios';
+import Errors from './Errors';
 
 export default class Apply extends Component {
 
@@ -19,6 +21,7 @@ export default class Apply extends Component {
 
         
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeSwitcher = this.handleChangeSwitcher.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.callbackFunction = this.callbackFunction.bind(this);
     }
@@ -45,6 +48,12 @@ export default class Apply extends Component {
 
     handleChange(event) {
         this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    handleChangeSwitcher(event) {
+        this.setState({
             [event.target.name]: event.target.value,
             productAttributes: {}
         });
@@ -60,6 +69,7 @@ export default class Apply extends Component {
         .then(response => {
             if(response.statusText == "OK")
             {
+                
                 this.renderRedirect();
 
                 ReactDOM.render(
@@ -70,12 +80,13 @@ export default class Apply extends Component {
                     ),
                 document.getElementById("indexMsg"));
             }
+            console.log(response)
         })
         .catch(error => {
-            console.log(error);
+            console.log(error.response);
             if (error.response.status == 422){
-                var errors = error.response.data.errors.name;
-                ReactDOM.render(<Errors errors={errors} />,document.getElementById("atributeMsg"))
+                var errors = error.response.data.errors;
+                ReactDOM.render(<Errors errors={errors} />,document.getElementById("applyMsg"))
             }
             else
                 console.log(error);
@@ -89,6 +100,7 @@ export default class Apply extends Component {
         console.log(this.state);
         return (
             <div className="container">
+                <div id="applyMsg"></div>
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
                     <h1 className="h2">Product Add</h1>
                     <div className="btn-toolbar mb-2 mb-md-0">
@@ -129,7 +141,7 @@ export default class Apply extends Component {
 
                         <div className="col-md-2 mb-3">
                         <label>Type Switcher</label>
-                            <select className="browser-default custom-select" id="switcher" name="categoryName" value={this.state.categoryName} onChange={this.handleChange}>
+                            <select className="browser-default custom-select" id="switcher" name="categoryName" value={this.state.categoryName} onChange={this.handleChangeSwitcher}>
                                 {this.state.categories.map(category => 
                                     <option value={category.name}>{category.name}</option>
                                 )}

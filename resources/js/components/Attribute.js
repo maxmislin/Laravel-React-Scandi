@@ -57,7 +57,16 @@ export default class Attribute extends Component {
         axios({
             method: 'post',
             url: '/api/addAtributes/submit',
-            data: this.state
+            data: {
+                categoryName: this.state.categoryName, 
+                name: this.state.name,
+                units: this.state.units,
+                required: this.state.required,
+                numeric: this.state.numeric,
+                unique: this.state.unique,
+                min: this.state.min,
+                max: this.state.max
+            }
         })
         .then(response => {
             if(response.statusText == "OK")
@@ -75,7 +84,7 @@ export default class Attribute extends Component {
         })
         .catch(error => {
             if (error.response.status == 422){
-                var errors = error.response.data.errors.name;
+                var errors = error.response.data.errors;
                 ReactDOM.render(<Errors errors={errors} />,document.getElementById("atributeMsg"))
             }
             else

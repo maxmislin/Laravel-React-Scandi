@@ -52,7 +52,7 @@ export default class Category extends Component {
         })
         .catch(error => {
             if (error.response.status == 422){
-                var errors = error.response.data.errors.name;
+                var errors = error.response.data.errors;
                 ReactDOM.render(<Errors errors={errors} />,document.getElementById("categoryMsg"))
             }
             else

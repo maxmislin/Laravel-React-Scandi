@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Attribute;
+use App\Models\Category;
 
-class deleteRequest extends FormRequest
+class productAttributeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +24,12 @@ class deleteRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
-            'id' => 'array|min:1'
-        ];
-    }
+    {   
 
-    public function messages()
-    {
-        return[
-            'id.min' => 'Nothing to delete.'
+        return [
+            'sku' => 'required|min:3|max:20|unique:App\Models\Product,sku',
+            'name' => 'required|min:3|max:30',
+            'price' => 'required|numeric'
         ];
     }
 }
