@@ -38,17 +38,21 @@ class applyRequest extends FormRequest
         $rules['price'] = 'required|numeric';
         
         foreach($attributes as $attribute){
-            $rules['productAttributes.'.$attribute->aName.'.value'] = "";
-            if ($attribute->required)
-                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|required';
-            if ($attribute->numeric)
-                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|numeric';   
-            if ($attribute->unique)
-                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|unique:App\Models\ProductAttribute,attribute,'.$attribute->aName;
-            if ($attribute->min)
-                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|min:'.$attribute->min;
-            if ($attribute->max)
-                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|max:'.$attribute->max;         
+            if (array_key_exists($attribute->aName, $this->productAttributes)){
+                if ($this->productAttributes[$attribute->aName]['value'] != null){
+                    $rules['productAttributes.'.$attribute->aName.'.value'] = "";
+                    if ($attribute->required)
+                        $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|required';
+                    if ($attribute->numeric)
+                        $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|numeric';   
+                    if ($attribute->unique)
+                        $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|unique:App\Models\ProductAttribute,attribute,'.$attribute->aName;
+                    if ($attribute->min)
+                        $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|min:'.$attribute->min;
+                    if ($attribute->max)
+                        $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|max:'.$attribute->max;
+                }
+            }         
         }
 
         return $rules;

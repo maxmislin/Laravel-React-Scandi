@@ -30,19 +30,21 @@ class applyController extends Controller
 
         foreach($attributes as $attribute){
             if (array_key_exists($attribute->aName, $req->productAttributes)){
-                $productAttribute = new ProductAttribute();
-                $productAttribute->product_id = $applyProduct->id;
-                $attribute->aName = str_replace("_"," ",$attribute->aName);
-                $productAttribute->attribute = $req->productAttributes[$attribute->aName]['value'];
-                $productAttribute->aName = $attribute->aName;
-                $productAttribute->units = $attribute->units;
+                if ($req->productAttributes[$attribute->aName]['value'] != null){
+                    $productAttribute = new ProductAttribute();
+                    $productAttribute->product_id = $applyProduct->id;
+                    $attribute->aName = str_replace("_"," ",$attribute->aName);
+                    $productAttribute->attribute = $req->productAttributes[$attribute->aName]['value'];
+                    $productAttribute->aName = $attribute->aName;
+                    $productAttribute->units = $attribute->units;
 
-                if ($req->productAttributes[$attribute->aName]['isHidden'] == true)
-                    $productAttribute->hidden = true;
-                else
-                    $productAttribute->hidden = false;
+                    if ($req->productAttributes[$attribute->aName]['isHidden'] == true)
+                        $productAttribute->hidden = true;
+                    else
+                        $productAttribute->hidden = false;
 
-                $productAttribute->save();
+                    $productAttribute->save();
+                }
             }
         }
     }
