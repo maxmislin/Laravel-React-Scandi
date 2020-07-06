@@ -17,12 +17,12 @@ class CreateAtributesTable extends Migration
             $table->id();
             $table->foreignId('category_id');
             $table->string('aName');
-            $table->string('units');
+            $table->string('units')->nullable();
             $table->boolean('required');
             $table->boolean('numeric');
             $table->boolean('unique');
-            $table->integer('min');
-            $table->integer('max');
+            $table->integer('min')->nullable();
+            $table->integer('max')->nullable();
             $table->timestamps();
         });
     }

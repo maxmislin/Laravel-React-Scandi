@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ProductList from './Products/ProductList';
-import { Redirect } from 'react-router-dom';
 import Errors from './Errors';
 import axios from 'axios';
 
@@ -43,7 +41,7 @@ export default class Category extends Component {
 
                 ReactDOM.render(
                     (    
-                        <div class="alert alert-success">
+                        <div className="alert alert-success">
                             Category added
                         </div>
                     ),

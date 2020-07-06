@@ -7,7 +7,7 @@ export default class ProductList extends Component {
         super();
         this.state = {
             products:[],
-            atributes:[]
+            attributes:[]
         }
         
         this.handleChangeCbox = this.handleChangeCbox.bind(this);
@@ -21,7 +21,7 @@ export default class ProductList extends Component {
         axios.get('/api/product').then(response => {
             this.setState({
                 products: response.data.productData,
-                atributes: response.data.atributeData
+                attributes: response.data.atributeData
             });
         }).catch(errors => {
             console.log(errors);
@@ -42,9 +42,9 @@ export default class ProductList extends Component {
                                 <li>{product.sku}</li>
                                 <li>{product.name}</li>
                                 <li>{product.price} $</li>
-                                {this.state.atributes.map(atribute =>(
-                                    atribute.product_id == product.id && atribute.hidden == 0 &&
-                                    <li>{atribute.aName}: {atribute.atribute} {atribute.units}</li>
+                                {this.state.attributes.map(attribute =>(
+                                    attribute.product_id == product.id && attribute.hidden == 0 &&
+                                    <li>{attribute.aName}: {attribute.attribute} {attribute.units}</li>
                                 ))}
                             </ul>
                         </div>
@@ -56,7 +56,3 @@ export default class ProductList extends Component {
     }
 
 }
-
-/*if (document.getElementById('product')) {
-    ReactDOM.render(<ProductList />, document.getElementById('product'));
-}*/

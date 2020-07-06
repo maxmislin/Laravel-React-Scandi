@@ -26,57 +26,49 @@ class applyRequest extends FormRequest
     public function rules()
     {   
         $category = Category::where('name', '=', $this->categoryName)->first();
-        $atributes = Attribute::where('category_id', '=', $category->id)->get();
+        $attributes = Attribute::where('category_id', '=', $category->id)->get();
 
-        foreach($atributes as $atribute){
-            $atribute->aName = str_replace(" ","_",$atribute->aName);
+        foreach($attributes as $attribute){
+            $attribute->aName = str_replace("_"," ",$attribute->aName);
         }
 
         $rules = array();
         $rules['sku'] = 'required|min:3|max:20|unique:App\Models\Product,sku';
         $rules['name'] = 'required|min:3|max:30';
         $rules['price'] = 'required|numeric';
-        //$rules['Weight'] = 'array';
         
-        foreach($atributes as $atribute){
-            $rules['productAttributes.'.$atribute->aName.'.value'] = "";
-            if ($atribute->required)
-                $rules['productAttributes.'.$atribute->aName.'.value'] = $rules['productAttributes.'.$atribute->aName.'.value'].'|required';
-            if ($atribute->numeric)
-                $rules['productAttributes.'.$atribute->aName.'.value'] = $rules['productAttributes.'.$atribute->aName.'.value'].'|numeric';   
-            if ($atribute->unique)
-                $rules['productAttributes.'.$atribute->aName.'.value'] = $rules['productAttributes.'.$atribute->aName.'.value'].'|unique:App\Models\ProductAtribute,atribute,'.$atribute->aName;
-            if ($atribute->min)
-                $rules['productAttributes.'.$atribute->aName.'.value'] = $rules['productAttributes.'.$atribute->aName.'.value'].'|min:'.$atribute->min;
-            if ($atribute->max)
-                $rules['productAttributes.'.$atribute->aName.'.value'] = $rules['productAttributes.'.$atribute->aName.'.value'].'|max:'.$atribute->max;         
+        foreach($attributes as $attribute){
+            $rules['productAttributes.'.$attribute->aName.'.value'] = "";
+            if ($attribute->required)
+                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|required';
+            if ($attribute->numeric)
+                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|numeric';   
+            if ($attribute->unique)
+                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|unique:App\Models\ProductAttribute,atribute,'.$attribute->aName;
+            if ($attribute->min)
+                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|min:'.$attribute->min;
+            if ($attribute->max)
+                $rules['productAttributes.'.$attribute->aName.'.value'] = $rules['productAttributes.'.$attribute->aName.'.value'].'|max:'.$attribute->max;         
         }
-        
-        //$rules['productAttributes.Weight.value'] = 'required|numeric';
-
-        //dump($rules);
 
         return $rules;
     }
 
     public function messages()
     {
-
         $category = Category::where('name', '=', $this->categoryName)->first();
-        $atributes = Attribute::where('category_id', '=', $category->id)->get();
+        $attributes = Attribute::where('category_id', '=', $category->id)->get();
 
-        foreach($atributes as $atribute){
-            $atribute->aName = str_replace(" ","_",$atribute->aName);
+        foreach($attributes as $attribute){
+            $attribute->aName = str_replace("_"," ",$attribute->aName);
         }
 
-
-        
         return[
-            'productAttributes.'.$atribute->aName.'.value.required' => 'The '.$atribute->aName.' field is required.',
-            'productAttributes.'.$atribute->aName.'.value.numeric' => 'The '.$atribute->aName.' must be a number.',
-            'productAttributes.'.$atribute->aName.'.value.unique' => 'The '.$atribute->aName.' has already been taken.',
-            'productAttributes.'.$atribute->aName.'.value.min' => 'The '.$atribute->aName.' must be at least :min.',
-            'productAttributes.'.$atribute->aName.'.value.max' => 'The '.$atribute->aName.' may not be greater than :max.'
+            'productAttributes.'.$attribute->aName.'.value.required' => 'The '.$attribute->aName.' field is required.',
+            'productAttributes.'.$attribute->aName.'.value.numeric' => 'The '.$attribute->aName.' must be a number.',
+            'productAttributes.'.$attribute->aName.'.value.unique' => 'The '.$attribute->aName.' has already been taken.',
+            'productAttributes.'.$attribute->aName.'.value.min' => 'The '.$attribute->aName.' must be at least :min.',
+            'productAttributes.'.$attribute->aName.'.value.max' => 'The '.$attribute->aName.' may not be greater than :max.'
         ];
     }
 }

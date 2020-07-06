@@ -19,13 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('product', 'productsController@index');
-Route::post('/delete', 'productsController@massDelete')->name('delete-form');
-//Route::get('/{path?}', 'applyController@allProductData')->name('index');
-//Route::get('/{path?}', 'applyController@allCategoryData')->name('apply');
-Route::post('/apply/submit', 'applyController@submit')->name('apply-form');
-Route::get('atributes', 'applyController@allAtributeAndCategoryData');
-Route::post('/addCategories/submit', 'categoryController@submitCategories')->name('addCategories-form');
-Route::get('categories', 'categoryController@allCategoryData')->name('addAtributes');
-Route::post('/addAtributes/submit', 'atributeController@submitAtributes')->name('addAtributes-form');
+Route::post('delete', 'productsController@massDelete');
+Route::post('apply/submit', 'applyController@submit');
+Route::get('attributes', 'applyController@allAtributeAndCategoryData');
+Route::post('addCategories/submit', 'categoryController@submitCategories');
+Route::get('categories', 'categoryController@allCategoryData');
+Route::post('addAttributes/submit', 'attributeController@submitAttributes');
 
 

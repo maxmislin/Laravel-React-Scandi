@@ -9,7 +9,8 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: []
+            id: [],
+            key: null
         }
 
         this.callbackFunction = this.callbackFunction.bind(this);
@@ -26,7 +27,7 @@ export default class App extends Component {
     }
 
     reload() {
-        window.location.reload(false);
+        this.setState({ key: Math.random() });
     }
 
     handleSubmit(event) {
@@ -39,18 +40,16 @@ export default class App extends Component {
         .then(response => {
             if(response.statusText == "OK")
             {
-                
                 this.reload();
 
                 ReactDOM.render(
                     (    
-                        <div class="alert alert-success">
+                        <div className="alert alert-success">
                             Products deleted
                         </div>
                     ),
                 document.getElementById("indexMsg"));
             }
-            console.log(response)
         })
         .catch(error => {
             console.log(error.response);
@@ -60,14 +59,12 @@ export default class App extends Component {
             }
             else
                 console.log(error);
-                
         });
         
         event.preventDefault();
     }
 
     render() {
-        console.log(this.state)
         return (
             <div className="container">
                 <div id="indexMsg"></div>
@@ -81,7 +78,7 @@ export default class App extends Component {
                 </div>
 
                 <form id="cBox" onSubmit={this.handleSubmit}>
-                <ProductList ApplyCallback = {this.callbackFunction} />
+                <ProductList key={this.state.key} ApplyCallback = {this.callbackFunction} />
                 </form>
             </div>
         );

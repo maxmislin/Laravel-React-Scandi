@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link} from 'react-router-dom';
-import FormSwitch from './Products/FormSwitch';
+import FormSwitch from './ProductAdd/FormSwitch';
 import axios from 'axios';
 import Errors from './Errors';
 
@@ -60,7 +60,6 @@ export default class Apply extends Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state);
         axios({
             method: 'post',
             url: '/api/apply/submit',
@@ -69,21 +68,18 @@ export default class Apply extends Component {
         .then(response => {
             if(response.statusText == "OK")
             {
-                
                 this.renderRedirect();
 
                 ReactDOM.render(
                     (    
-                        <div class="alert alert-success">
+                        <div className="alert alert-success">
                             Product added
                         </div>
                     ),
                 document.getElementById("indexMsg"));
             }
-            console.log(response)
         })
         .catch(error => {
-            console.log(error.response);
             if (error.response.status == 422){
                 var errors = error.response.data.errors;
                 ReactDOM.render(<Errors errors={errors} />,document.getElementById("applyMsg"))
@@ -97,7 +93,6 @@ export default class Apply extends Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="container">
                 <div id="applyMsg"></div>

@@ -12,9 +12,9 @@ export default class Attribute extends Component {
             categoryName: '', 
             name: '',
             units: '',
-            required: 'false',
-            numeric: 'false',
-            unique: 'false',
+            required: false,
+            numeric: false,
+            unique: false,
             min: null,
             max: null,
             validationErrorMessage: []
@@ -41,11 +41,7 @@ export default class Attribute extends Component {
     }
 
     handleChangeCheckbox(event) {
-        if (event.target.value == 'false'){
-            this.setState({[event.target.name]: 'true'})
-        }
-        else
-            this.setState({[event.target.name]: 'false'})
+        this.setState({[event.target.name]: event.target.checked});
     }
     
     renderRedirect() {
@@ -53,10 +49,9 @@ export default class Attribute extends Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state);
         axios({
             method: 'post',
-            url: '/api/addAtributes/submit',
+            url: '/api/addAttributes/submit',
             data: {
                 categoryName: this.state.categoryName, 
                 name: this.state.name,
@@ -75,7 +70,7 @@ export default class Attribute extends Component {
 
                 ReactDOM.render(
                     (    
-                        <div class="alert alert-success">
+                        <div className="alert alert-success">
                             Attribute added
                         </div>
                     ),
@@ -89,7 +84,6 @@ export default class Attribute extends Component {
             }
             else
                 console.log(error);
-                
         });
         
         event.preventDefault();

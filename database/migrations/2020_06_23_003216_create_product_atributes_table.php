@@ -13,12 +13,12 @@ class CreateProductAtributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_atributes', function (Blueprint $table) {
+        Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
-            $table->string('atribute');
+            $table->string('attribute');
             $table->string('aName');
-            $table->string('units');
+            $table->string('units')->nullable();
             $table->boolean('hidden');
             $table->timestamps();
         });

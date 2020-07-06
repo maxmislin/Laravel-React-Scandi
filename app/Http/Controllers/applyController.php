@@ -7,22 +7,19 @@ use App\Http\Requests\applyRequest;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Attribute;
-use App\Models\ProductAtribute;
+use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\Validator;
 
 class applyController extends Controller
 {
-    
     public function submit(applyRequest $req) {
-
-        //dd($req);
 
         $applyProduct = new Product();
         $category = Category::where('name', '=', $req->categoryName)->first();
-        $atributes = Attribute::where('category_id', '=', $category->id)->get();
+        $attributes = Attribute::where('category_id', '=', $category->id)->get();
 
-        foreach($atributes as $atribute){
-            $atribute->aName = str_replace(" ","_",$atribute->aName);
+        foreach($attributes as $attribute){
+            $attribute->aName = str_replace(" ","_",$attribute->aName);
         }
 
         $applyProduct->category_id = $category->id;
@@ -31,27 +28,21 @@ class applyController extends Controller
         $applyProduct->price = $req->input('price');
         $applyProduct->save();
 
-        foreach($atributes as $atribute){
-            $productAtribute = new ProductAtribute();
-            $productAtribute->product_id = $applyProduct->id;
-            $atribute->aName = str_replace("_"," ",$atribute->aName);
-            $productAtribute->atribute = $req->productAttributes[$atribute->aName]['value'];
-            $productAtribute->aName = $atribute->aName;
-            $productAtribute->units = $atribute->units;
+        foreach($attributes as $attribute){
+            $productAttribute = new ProductAttribute();
+            $productAttribute->product_id = $applyProduct->id;
+            $attribute->aName = str_replace("_"," ",$attribute->aName);
+            $productAttribute->attribute = $req->productAttributes[$attribute->aName]['value'];
+            $productAttribute->aName = $attribute->aName;
+            $productAttribute->units = $attribute->units;
 
-            
-
-            if ($req->productAttributes[$atribute->aName]['isHidden'] == true)
-                $productAtribute->hidden = true;
+            if ($req->productAttributes[$attribute->aName]['isHidden'] == true)
+                $productAttribute->hidden = true;
             else
-                $productAtribute->hidden = false;
+                $productAttribute->hidden = false;
 
-            //dd($productAtribute->hidden);
-
-            $productAtribute->save();
+            $productAttribute->save();
         }
-
-        //return redirect()->route('index')->with('success', 'Product added');
     }
 
     public function allAtributeAndCategoryData() {

@@ -7,7 +7,7 @@ export default class FormSwitch extends Component {
         super();
         this.initialState = {
             categories: [],
-            atributes: [],
+            attributes: [],
             isHidden: false,
             aName: '',
             aValue: ''
@@ -17,15 +17,13 @@ export default class FormSwitch extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeCbox = this.handleChangeCbox.bind(this);
-        //this.sendData = this.sendData.bind(this);
     }
 
-    componentWillMount() {
-        //this.props.productAttributes = [];
-        axios.get('/api/atributes').then(response => {
+    componentDidMount() {
+        axios.get('/api/attributes').then(response => {
             this.setState({
                 categories: response.data.categoryData,
-                atributes: response.data.atributeData
+                attributes: response.data.atributeData
             });
         }).catch(errors => {
             console.log(errors);
@@ -48,17 +46,17 @@ export default class FormSwitch extends Component {
             <div className="col-md-3 mb-3">
                 {this.state.categories.map(category =>
                     category.name == this.props.switcher &&
-                        this.state.atributes.map(atribute =>
-                            category.id == atribute.category_id &&
+                        this.state.attributes.map(attribute =>
+                            category.id == attribute.category_id &&
                                 (
                                     <div>
-                                        <label htmlFor={category.name} className="mt-2">{atribute.aName}</label>
-                                        {atribute.units != null ? (
-                                        <p className="tip">{"Please, enter " + atribute.aName + " in " + atribute.units}</p>
+                                        <label htmlFor={category.name} className="mt-2">{attribute.aName}</label>
+                                        {attribute.units != null ? (
+                                        <p className="tip">{"Please, enter " + attribute.aName + " in " + attribute.units}</p>
                                         ) : (
-                                        <p>{"Please, enter " + atribute.aName}</p>
+                                        <p>{"Please, enter " + attribute.aName}</p>
                                         )}
-                                        <input type="text" className="form-control" name={this.state.aName = atribute.aName} value={this.state.aValue} onChange={this.handleChange} required="" />
+                                        <input type="text" className="form-control" name={this.state.aName = attribute.aName} value={this.state.aValue} onChange={this.handleChange} required="" />
                                         <label htmlFor="hidden" className="mt-2">Hidden</label>
                                         <input type="checkbox" className="ml-1" name="hidden" onChange={this.handleChangeCbox} required="" />
                                         
