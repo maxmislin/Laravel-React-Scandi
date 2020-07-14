@@ -8,17 +8,13 @@
   width: 21%;
 }
 
-.buttonD {
-  padding-top: 50px;
-}
-
 .siteHeader {
   background-color: rgba(0, 0, 0, 0.85);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
           backdrop-filter: saturate(180%) blur(20px);
 }
 
-.t {
+.HeaderTitle {
   color: #999;
   transition: ease-in-out color 0.15s;
   transition-property: color;
@@ -27,7 +23,7 @@
   transition-delay: 0s;
 }
 
-.tHeader {
+.HeaderNavigation {
   color: #999;
   transition: ease-in-out color 0.15s;
   transition-property: color;
@@ -36,7 +32,7 @@
   transition-delay: 0s;
 }
 
-.tHeader:hover {
+.HeaderNavigation:hover {
   color: #fff;
   text-decoration: none;
 }

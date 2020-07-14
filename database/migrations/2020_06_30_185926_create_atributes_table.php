@@ -16,7 +16,7 @@ class CreateAtributesTable extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id');
-            $table->string('aName');
+            $table->string('name');
             $table->string('units')->nullable();
             $table->boolean('required');
             $table->boolean('numeric');

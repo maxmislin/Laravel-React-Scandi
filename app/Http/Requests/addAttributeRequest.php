@@ -27,7 +27,7 @@ class addAttributeRequest extends FormRequest
         $category = Category::where('name', '=', $this->categoryName)->first();
         
         return [
-            'name' => 'required|min:3|max:20|unique:App\Models\Attribute,aName,NULL,id,category_id,'.$category->id,
+            'name' => 'required|min:3|max:20|unique:App\Models\Attribute,name,NULL,id,category_id,'.$category->id,
             'min' => 'nullable|numeric',
             'max' => 'nullable|numeric'
         ];

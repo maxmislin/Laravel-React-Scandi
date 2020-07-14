@@ -10,7 +10,8 @@ export default class Category extends Component {
         super(props);
         this.state = {
             name: '',
-            validationErrorMessage: []
+            validationErrorMessage: [],
+            errors: []
         };
     
         this.handleChange = this.handleChange.bind(this);
@@ -50,7 +51,7 @@ export default class Category extends Component {
         .catch(error => {
             if (error.response.status == 422){
                 var errors = error.response.data.errors;
-                ReactDOM.render(<Errors errors={errors} />,document.getElementById("categoryMsg"))
+                this.setState({errors:errors});
             }
             else
                 console.log(error);
@@ -64,7 +65,9 @@ export default class Category extends Component {
     render() {
         return (
             <div className="container">
-                <div id="categoryMsg"></div>
+                {Object.keys(this.state.errors).length != 0 &&
+                    <Errors errors={this.state.errors} />
+                }
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
                     <h1 className="h2">Add Category</h1>
                 </div>

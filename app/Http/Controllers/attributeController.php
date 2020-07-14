@@ -14,7 +14,7 @@ class attributeController extends Controller
         $addAttribute = new Attribute();
         $category = Category::where('name', '=', $req->categoryName)->first();
         $addAttribute->category_id = $category->id;
-        $addAttribute->aName = $req->input('name');
+        $addAttribute->name = $req->input('name');
         $addAttribute->units = $req->input('units');
 
         if ($req->required == true)

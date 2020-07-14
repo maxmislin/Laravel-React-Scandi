@@ -19,7 +19,7 @@ class applyController extends Controller
         $attributes = Attribute::where('category_id', '=', $category->id)->get();
 
         foreach($attributes as $attribute){
-            $attribute->aName = str_replace(" ","_",$attribute->aName);
+            $attribute->name = str_replace(" ","_",$attribute->name);
         }
 
         $applyProduct->category_id = $category->id;
@@ -29,16 +29,16 @@ class applyController extends Controller
         $applyProduct->save();
 
         foreach($attributes as $attribute){
-            if (array_key_exists($attribute->aName, $req->productAttributes)){
-                if ($req->productAttributes[$attribute->aName]['value'] != null){
+            if (array_key_exists($attribute->name, $req->productAttributes)){
+                if ($req->productAttributes[$attribute->name]['value'] != null){
                     $productAttribute = new ProductAttribute();
                     $productAttribute->product_id = $applyProduct->id;
-                    $attribute->aName = str_replace("_"," ",$attribute->aName);
-                    $productAttribute->attribute = $req->productAttributes[$attribute->aName]['value'];
-                    $productAttribute->aName = $attribute->aName;
+                    $attribute->name = str_replace("_"," ",$attribute->name);
+                    $productAttribute->attribute = $req->productAttributes[$attribute->name]['value'];
+                    $productAttribute->name = $attribute->name;
                     $productAttribute->units = $attribute->units;
 
-                    if ($req->productAttributes[$attribute->aName]['isHidden'] == true)
+                    if ($req->productAttributes[$attribute->name]['isHidden'] == true)
                         $productAttribute->hidden = true;
                     else
                         $productAttribute->hidden = false;

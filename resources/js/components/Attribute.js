@@ -17,7 +17,8 @@ export default class Attribute extends Component {
             unique: false,
             min: null,
             max: null,
-            validationErrorMessage: []
+            validationErrorMessage: [],
+            errors:[]
         }
         
         this.handleChange = this.handleChange.bind(this);
@@ -80,7 +81,7 @@ export default class Attribute extends Component {
         .catch(error => {
             if (error.response.status == 422){
                 var errors = error.response.data.errors;
-                ReactDOM.render(<Errors errors={errors} />,document.getElementById("atributeMsg"))
+                this.setState({errors:errors})
             }
             else
                 console.log(error);
@@ -92,7 +93,9 @@ export default class Attribute extends Component {
     render() {
         return (
             <div className="container">
-                <div id="atributeMsg"></div>
+                {Object.keys(this.state.errors).length != 0 &&
+                    <Errors errors={this.state.errors} />
+                }
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
                     <h1 className="h2">Add Attribute</h1>
                 </div>
@@ -131,17 +134,17 @@ export default class Attribute extends Component {
                     </div>
                         
                     <div className="col-md-3 mb-3">
-                        <label htmlFor="cBoxReq">Required(optional)</label>
+                        <label htmlFor="CheckBoxReq">Required(optional)</label>
                         <input type="checkbox" name="required" ref="required" value={this.state.required} onChange={this.handleChangeCheckbox} className="ml-1" id="req" />
                     </div>
                         
                     <div className="col-md-3 mb-3">
-                        <label htmlFor="cBoxNum">Numeric(optional)</label>
+                        <label htmlFor="CheckBoxNum">Numeric(optional)</label>
                         <input type="checkbox" name="numeric" value={this.state.numeric}  onChange={this.handleChangeCheckbox} className="ml-1" id="num" />
                     </div>
 
                     <div className="col-md-3 mb-3">
-                        <label htmlFor="cBoxUni">Unique(optional)</label>
+                        <label htmlFor="CheckBoxUni">Unique(optional)</label>
                         <input type="checkbox" name="unique" value={this.state.unique} onChange={this.handleChangeCheckbox} className="ml-1" id="uniq" />
                     </div>
 

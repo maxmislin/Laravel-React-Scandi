@@ -69874,7 +69874,8 @@ var Attribute = /*#__PURE__*/function (_Component) {
       unique: false,
       min: null,
       max: null,
-      validationErrorMessage: []
+      validationErrorMessage: [],
+      errors: []
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -69940,9 +69941,10 @@ var Attribute = /*#__PURE__*/function (_Component) {
       })["catch"](function (error) {
         if (error.response.status == 422) {
           var errors = error.response.data.errors;
-          react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_3__["default"], {
+
+          _this3.setState({
             errors: errors
-          }), document.getElementById("atributeMsg"));
+          });
         } else console.log(error);
       });
       event.preventDefault();
@@ -69952,8 +69954,8 @@ var Attribute = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "atributeMsg"
+      }, Object.keys(this.state.errors).length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        errors: this.state.errors
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -70005,7 +70007,7 @@ var Attribute = /*#__PURE__*/function (_Component) {
       }, "Please enter Units.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "cBoxReq"
+        htmlFor: "CheckBoxReq"
       }, "Required(optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "checkbox",
         name: "required",
@@ -70017,7 +70019,7 @@ var Attribute = /*#__PURE__*/function (_Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "cBoxNum"
+        htmlFor: "CheckBoxNum"
       }, "Numeric(optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "checkbox",
         name: "numeric",
@@ -70028,7 +70030,7 @@ var Attribute = /*#__PURE__*/function (_Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "cBoxUni"
+        htmlFor: "CheckBoxUni"
       }, "Unique(optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "checkbox",
         name: "unique",
@@ -70133,7 +70135,8 @@ var Category = /*#__PURE__*/function (_Component) {
     _this = _super.call(this, props);
     _this.state = {
       name: '',
-      validationErrorMessage: []
+      validationErrorMessage: [],
+      errors: []
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -70174,9 +70177,10 @@ var Category = /*#__PURE__*/function (_Component) {
       })["catch"](function (error) {
         if (error.response.status == 422) {
           var errors = error.response.data.errors;
-          react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_2__["default"], {
+
+          _this2.setState({
             errors: errors
-          }), document.getElementById("categoryMsg"));
+          });
         } else console.log(error);
       });
       event.preventDefault();
@@ -70186,8 +70190,8 @@ var Category = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "categoryMsg"
+      }, Object.keys(this.state.errors).length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        errors: this.state.errors
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -70311,9 +70315,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Header; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70339,7 +70341,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var Header = /*#__PURE__*/function (_Component) {
   _inherits(Header, _Component);
 
@@ -70357,14 +70358,14 @@ var Header = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "siteHeader d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "t my-0 mr-md-auto font-weight-normal"
+        className: "HeaderTitle my-0 mr-md-auto font-weight-normal"
       }, "Scandiweb"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "my-2 my-md-0 mr-md-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-        className: "p-2 tHeader",
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "p-2 HeaderNavigation",
         to: "/"
-      }, "Product List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-        className: "p-2 tHeader",
+      }, "Product List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "p-2 HeaderNavigation",
         to: "/apply"
       }, "Product Add"))));
     }
@@ -70449,7 +70450,9 @@ var Apply = /*#__PURE__*/function (_Component) {
       name: '',
       sku: '',
       price: '',
-      productAttributes: {}
+      productAttributes: {},
+      errors: [],
+      key: null
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleChangeSwitcher = _this.handleChangeSwitcher.bind(_assertThisInitialized(_this));
@@ -70502,6 +70505,13 @@ var Apply = /*#__PURE__*/function (_Component) {
       this.setState((_this$setState2 = {}, _defineProperty(_this$setState2, event.target.name, event.target.value), _defineProperty(_this$setState2, "productAttributes", {}), _this$setState2));
     }
   }, {
+    key: "reload",
+    value: function reload() {
+      this.setState({
+        key: Math.random()
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       var _this3 = this;
@@ -70521,9 +70531,10 @@ var Apply = /*#__PURE__*/function (_Component) {
       })["catch"](function (error) {
         if (error.response.status == 422) {
           var errors = error.response.data.errors;
-          react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_5__["default"], {
+
+          _this3.setState({
             errors: errors
-          }), document.getElementById("applyMsg"));
+          });
         } else console.log(error);
       });
       event.preventDefault();
@@ -70533,11 +70544,13 @@ var Apply = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, Object.keys(this.state.errors).length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        errors: this.state.errors
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "applyMsg"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "h2"
       }, "Product Add"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "btn-toolbar mb-2 mb-md-0"
@@ -70605,7 +70618,7 @@ var Apply = /*#__PURE__*/function (_Component) {
           value: category.name
         }, category.name);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductAdd_FormSwitch__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        ApplyCallback: this.callbackFunction,
+        applyCallback: this.callbackFunction,
         switcher: this.state.categoryName,
         productAttributes: this.state.productAttributes
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -70687,7 +70700,7 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
     };
     _this.state = _this.initialState;
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
-    _this.handleChangeCbox = _this.handleChangeCbox.bind(_assertThisInitialized(_this));
+    _this.handleChangeCheckBox = _this.handleChangeCheckBox.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -70719,11 +70732,11 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
       this.setState({
         productAttributes: newAttr
       });
-      this.props.ApplyCallback(event.target.name, event.target.value, isHiddenValue);
+      this.props.applyCallback(event.target.name, event.target.value, isHiddenValue);
     }
   }, {
-    key: "handleChangeCbox",
-    value: function handleChangeCbox(event) {
+    key: "handleChangeCheckBox",
+    value: function handleChangeCheckBox(event) {
       var attrValue = this.state.productAttributes[event.target.name] ? this.state.productAttributes[event.target.name].value : "";
 
       var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
@@ -70734,7 +70747,7 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
       this.setState({
         productAttributes: newAttr
       });
-      this.props.ApplyCallback(event.target.name, attrValue, event.target.checked);
+      this.props.applyCallback(event.target.name, attrValue, event.target.checked);
     }
   }, {
     key: "render",
@@ -70748,12 +70761,12 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
           return category.id == attribute.category_id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
             htmlFor: category.name,
             className: "mt-2"
-          }, attribute.aName), attribute.units != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          }, attribute.name), attribute.units != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "tip"
-          }, "Please, enter " + attribute.aName + " in " + attribute.units) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please, enter " + attribute.aName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          }, "Please, enter " + attribute.name + " in " + attribute.units) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please, enter " + attribute.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "text",
             className: "form-control",
-            name: attribute.aName,
+            name: attribute.name,
             onChange: _this3.handleChange,
             required: ""
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -70762,8 +70775,8 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
           }, "Hidden"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "checkbox",
             className: "ml-1",
-            name: attribute.aName,
-            onChange: _this3.handleChangeCbox,
+            name: attribute.name,
+            onChange: _this3.handleChangeCheckBox,
             required: ""
           }));
         });
@@ -70917,22 +70930,22 @@ var App = /*#__PURE__*/function (_Component) {
         id: "indexMsg"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "h2"
       }, "Product List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "btn-toolbar mb-2 mb-md-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "btn-group mr-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        form: "cBox",
+        form: "DeleteForm",
         type: "submit",
         className: "btn btn-sm btn-outline-secondary py-2 px-2"
       }, "Mass Delete Action")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        id: "cBox",
+        id: "DeleteForm",
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products_ProductList__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: this.state.key,
-        ApplyCallback: this.callbackFunction
+        applyCallback: this.callbackFunction
       })));
     }
   }]);
@@ -70998,14 +71011,14 @@ var ProductList = /*#__PURE__*/function (_Component) {
       products: [],
       attributes: []
     };
-    _this.handleChangeCbox = _this.handleChangeCbox.bind(_assertThisInitialized(_this));
+    _this.handleChangeCheckbox = _this.handleChangeCheckbox.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(ProductList, [{
-    key: "handleChangeCbox",
-    value: function handleChangeCbox(event) {
-      this.props.ApplyCallback(event.target.value, event.target.checked);
+    key: "handleChangeCheckbox",
+    value: function handleChangeCheckbox(event) {
+      this.props.applyCallback(event.target.value, event.target.checked);
     }
   }, {
     key: "componentDidMount",
@@ -71040,11 +71053,11 @@ var ProductList = /*#__PURE__*/function (_Component) {
           type: "checkbox",
           name: "id[]",
           value: product.id,
-          onChange: _this3.handleChangeCbox
+          onChange: _this3.handleChangeCheckbox
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "list-unstyled mt-3 mb-4"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.sku), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.price, " $"), _this3.state.attributes.map(function (attribute) {
-          return attribute.product_id == product.id && attribute.hidden == 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, attribute.aName, ": ", attribute.attribute, " ", attribute.units);
+          return attribute.product_id == product.id && attribute.hidden == 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, attribute.name, ": ", attribute.attribute, " ", attribute.units);
         }))));
       }));
     }

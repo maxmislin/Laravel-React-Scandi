@@ -10,11 +10,11 @@ export default class ProductList extends Component {
             attributes:[]
         }
         
-        this.handleChangeCbox = this.handleChangeCbox.bind(this);
+        this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     }
 
-    handleChangeCbox(event) {
-        this.props.ApplyCallback(event.target.value, event.target.checked);
+    handleChangeCheckbox(event) {
+        this.props.applyCallback(event.target.value, event.target.checked);
     }
 
     componentDidMount() {
@@ -36,7 +36,7 @@ export default class ProductList extends Component {
                     <div className="card mb-4 shadow-sm">
                         <div className="card-body">
                             <div align="right" className="checkbox-inline custom-checkbox">
-                                <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCbox}></input>
+                                <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox}></input>
 							</div>
                             <ul className="list-unstyled mt-3 mb-4">
                                 <li>{product.sku}</li>
@@ -44,7 +44,7 @@ export default class ProductList extends Component {
                                 <li>{product.price} $</li>
                                 {this.state.attributes.map(attribute =>(
                                     attribute.product_id == product.id && attribute.hidden == 0 &&
-                                    <li>{attribute.aName}: {attribute.attribute} {attribute.units}</li>
+                                    <li>{attribute.name}: {attribute.attribute} {attribute.units}</li>
                                 ))}
                             </ul>
                         </div>

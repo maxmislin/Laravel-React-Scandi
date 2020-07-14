@@ -16,7 +16,9 @@ export default class Apply extends Component {
             name: '',
             sku: '',
             price: '',
-            productAttributes: {}
+            productAttributes: {},
+            errors: [],
+            key: null
         }
 
         
@@ -59,6 +61,10 @@ export default class Apply extends Component {
         });
     }
 
+    reload() {
+        this.setState({ key: Math.random() });
+    }
+
     handleSubmit(event) {
         axios({
             method: 'post',
@@ -82,7 +88,7 @@ export default class Apply extends Component {
         .catch(error => {
             if (error.response.status == 422){
                 var errors = error.response.data.errors;
-                ReactDOM.render(<Errors errors={errors} />,document.getElementById("applyMsg"))
+                this.setState({errors:errors})
             }
             else
                 console.log(error);
@@ -95,9 +101,12 @@ export default class Apply extends Component {
     render() {
         return (
             <div className="container">
+                {Object.keys(this.state.errors).length != 0 &&
+                    <Errors errors={this.state.errors} />
+                }
                 <div id="applyMsg"></div>
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
-                    <h1 className="h2">Product Add</h1>
+                    <h2 className="h2">Product Add</h2>
                     <div className="btn-toolbar mb-2 mb-md-0">
                         <div className="btn-group mr-2">
                         <Link className="btn btn-sm btn-outline-secondary py-2 px-2" to="/addCategory">Add Category</Link>
@@ -143,7 +152,7 @@ export default class Apply extends Component {
                             </select>
                     </div>
                             
-                    <FormSwitch ApplyCallback = {this.callbackFunction} switcher={this.state.categoryName} productAttributes={this.state.productAttributes} />
+                    <FormSwitch applyCallback = {this.callbackFunction} switcher={this.state.categoryName} productAttributes={this.state.productAttributes} />
 
                     <div className="col-md-3 mb-3">
                     <button type="submit" className="btn btn-sm btn-outline-secondary pl-5 pr-5 pt-2">
