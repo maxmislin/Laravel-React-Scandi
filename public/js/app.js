@@ -70862,7 +70862,8 @@ var App = /*#__PURE__*/function (_Component) {
     _this = _super.call(this, props);
     _this.state = {
       id: [],
-      key: null
+      key: null,
+      errors: []
     };
     _this.callbackFunction = _this.callbackFunction.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -70914,9 +70915,10 @@ var App = /*#__PURE__*/function (_Component) {
       })["catch"](function (error) {
         if (error.response.status == 422) {
           var errors = error.response.data.errors;
-          react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_4__["default"], {
+
+          _this2.setState({
             errors: errors
-          }), document.getElementById("indexMsg"));
+          });
         } else console.log(error);
       });
       event.preventDefault();
@@ -70926,7 +70928,9 @@ var App = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, Object.keys(this.state.errors).length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        errors: this.state.errors
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "indexMsg"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3"

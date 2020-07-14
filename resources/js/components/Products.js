@@ -10,7 +10,8 @@ export default class App extends Component {
         super(props);
         this.state = {
             id: [],
-            key: null
+            key: null,
+            errors: []
         }
 
         this.callbackFunction = this.callbackFunction.bind(this);
@@ -54,7 +55,7 @@ export default class App extends Component {
         .catch(error => {
             if (error.response.status == 422){
                 var errors = error.response.data.errors;
-                ReactDOM.render(<Errors errors={errors} />,document.getElementById("indexMsg"))
+                this.setState({errors:errors})
             }
             else
                 console.log(error);
@@ -66,6 +67,9 @@ export default class App extends Component {
     render() {
         return (
             <div className="container">
+                {Object.keys(this.state.errors).length != 0 &&
+                    <Errors errors={this.state.errors} />
+                }
                 <div id="indexMsg"></div>
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
                     <h2 className="h2">Product List</h2>
