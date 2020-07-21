@@ -1,39 +1,57 @@
-.card {
-  width: 21%;
-  margin: 2%;
-  text-align: center;
-}
-
 .input {
   width: 21%;
 }
 
-.siteHeader {
-  background-color: rgba(0, 0, 0, 0.85);
+.site-header {
   -webkit-backdrop-filter: saturate(180%) blur(20px);
           backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(0, 0, 0, 0.85);
 }
 
-.HeaderTitle {
+.header-title {
   color: #999;
   transition: ease-in-out color 0.15s;
-  transition-property: color;
-  transition-duration: 0.15s;
-  transition-timing-function: ease-in-out;
   transition-delay: 0s;
+  transition-duration: 0.15s;
+  transition-property: color;
+  transition-timing-function: ease-in-out;
 }
 
-.HeaderNavigation {
+.header-navigation {
   color: #999;
   transition: ease-in-out color 0.15s;
-  transition-property: color;
-  transition-duration: 0.15s;
-  transition-timing-function: ease-in-out;
   transition-delay: 0s;
+  transition-duration: 0.15s;
+  transition-property: color;
+  transition-timing-function: ease-in-out;
 }
 
-.HeaderNavigation:hover {
+.header-navigation:hover {
   color: #fff;
   text-decoration: none;
+}
+
+@media (max-width: 500px) {
+  .card {
+    margin: 2%;
+    text-align: center;
+    width: 45%;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 501px) {
+  .card {
+    margin: 2%;
+    text-align: center;
+    width: 21%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .card {
+    margin: 2%;
+    text-align: center;
+    width: 16%;
+  }
 }
 

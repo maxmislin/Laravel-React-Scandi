@@ -25,6 +25,7 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
+        "eslint-config-airbnb": "^18.2.0",
         "idempotent-babel-polyfill": "^7.4.4",
         "react-router-dom": "^5.2.0"
     }

@@ -34,11 +34,9 @@ export default class ProductList extends Component {
                 {this.state.products.map(product =>
                     (
                     <div className="card mb-4 shadow-sm">
+                        <img className="card-img-top" src={require('./phone.jpg')} alt="Card image cap"></img>
                         <div className="card-body">
-                            <div align="right" className="checkbox-inline custom-checkbox">
-                                <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox}></input>
-							</div>
-                            <ul className="list-unstyled mt-3 mb-4">
+                            <ul className="list-unstyled">
                                 <li>{product.sku}</li>
                                 <li>{product.name}</li>
                                 <li>{product.price} $</li>
@@ -48,6 +46,10 @@ export default class ProductList extends Component {
                                 ))}
                             </ul>
                         </div>
+                        <div align="right" className="checkbox-inline custom-checkbox mr-3">
+                                <label htmlFor="delete" className="mr-1">Delete:</label>
+                                <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox}></input>
+						</div>
                     </div>
                     )
                 )}
