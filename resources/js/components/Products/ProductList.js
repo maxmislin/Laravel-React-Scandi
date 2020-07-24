@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {isWebpSupported} from 'react-image-webp/dist/utils';
 
 export default class ProductList extends Component {
 
@@ -34,7 +35,11 @@ export default class ProductList extends Component {
                 {this.state.products.map(product =>
                     (
                     <div className="card mb-4 shadow-sm">
-                        <img className="card-img-top" src={require('./phone.jpg')} alt="Card image cap"></img>
+                        <picture>
+                            <source type="image/webp" srcSet={`images/webp/${product.picture}.webp`}/>
+                            <source type="image" srcSet={`images/${product.picture}`}/>
+                            <img className="card-img-top img-fluid" src={`images/${product.picture}`} alt="Card image cap"/>
+                        </picture>
                         <div className="card-body">
                             <ul className="list-unstyled">
                                 <li>{product.sku}</li>

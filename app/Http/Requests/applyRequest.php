@@ -26,7 +26,7 @@ class applyRequest extends FormRequest
     public function rules()
     {   
 
-       // dd($this->request);
+        //dd($this->request);
         $category = Category::where('name', '=', $this->categoryName)->first();
         $attributes = Attribute::where('category_id', '=', $category->id)->get();
 
@@ -38,6 +38,7 @@ class applyRequest extends FormRequest
         $rules['sku'] = 'required|min:3|max:20|unique:App\Models\Product,sku';
         $rules['name'] = 'required|min:3|max:30';
         $rules['price'] = 'required|numeric';
+        $rules['image'] = 'required';
         $request = array();
 
 

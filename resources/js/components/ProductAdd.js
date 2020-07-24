@@ -16,6 +16,7 @@ export default class Apply extends Component {
             name: '',
             sku: '',
             price: '',
+            image: null,
             productAttributes: {},
             errors: [],
             key: null
@@ -24,6 +25,7 @@ export default class Apply extends Component {
         
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeSwitcher = this.handleChangeSwitcher.bind(this);
+        this.handleChangeImage = this.handleChangeImage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.callbackFunction = this.callbackFunction.bind(this);
     }
@@ -59,6 +61,29 @@ export default class Apply extends Component {
             [event.target.name]: event.target.value,
             productAttributes: {}
         });
+    }
+
+    handleChangeImage(event) {
+        this.setState({
+            [event.target.name]: event.target.files[0]
+        })
+    }
+
+    handleChangeImage(event) {
+        let files = event.target.files || event.dataTransfer.files;
+        if (!files.length)
+              return;
+        this.createImage(files[0]);
+    }
+
+    createImage(file) {
+        let reader = new FileReader();
+        reader.onload = (event) => {
+          this.setState({
+            image: event.target.result
+          })
+        };
+        reader.readAsDataURL(file);
     }
 
     reload() {
@@ -99,6 +124,7 @@ export default class Apply extends Component {
     }
 
     render() {
+        console.log(this.state);
         return (
             <div className="container">
                 {Object.keys(this.state.errors).length != 0 &&
@@ -117,33 +143,38 @@ export default class Apply extends Component {
                     </div>
                 </div>
                 
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} enctype="multipart/form-data">
 
                     <div className="col-md-3 mb-3">  
-                    <label htmlFor="sku">SKU</label>
-                    <input type="text" className="form-control" name="sku" value={this.state.sku} onChange={this.handleChange} required="" />
-                    <div className="invalid-feedback">
-                        Please enter SKU.
-                    </div>
+                        <label htmlFor="sku">SKU</label>
+                        <input type="text" className="form-control" name="sku" value={this.state.sku} onChange={this.handleChange} required="" />
+                        <div className="invalid-feedback">
+                            Please enter SKU.
+                        </div>
                     </div>
 
                     <div className="col-md-3 mb-3">
-                    <label htmlFor="name">Name</label>
-                    <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.handleChange} required="" />
-                    <div className="invalid-feedback">
-                        Please enter Name.
-                    </div>
-                    </div>
-
-                        <div className="col-md-3 mb-3">
-                    <label htmlFor="price">Price</label>
-                    <input type="text" className="form-control" name="price" value={this.state.price} onChange={this.handleChange} required="" />
-                    <div className="invalid-feedback">
-                        Please enter price.
-                    </div>
+                        <label htmlFor="name">Name</label>
+                        <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.handleChange} required="" />
+                        <div className="invalid-feedback">
+                            Please enter Name.
+                        </div>
                     </div>
 
-                        <div className="col-md-2 mb-3">
+                    <div className="col-md-3 mb-3">
+                        <label htmlFor="price">Price</label>
+                        <input type="text" className="form-control" name="price" value={this.state.price} onChange={this.handleChange} required="" />
+                        <div className="invalid-feedback">
+                            Please enter price.
+                        </div>
+                    </div>
+
+                    <div className="col-md-3 mb-3">
+                        <label htmlFor="image">Image</label>
+                        <input type="file" name="image" onChange={this.handleChangeImage} />
+                    </div>
+
+                    <div className="col-md-2 mb-3">
                         <label>Type Switcher</label>
                             <select className="browser-default custom-select" id="switcher" name="categoryName" value={this.state.categoryName} onChange={this.handleChangeSwitcher}>
                                 {this.state.categories.map(category => 
