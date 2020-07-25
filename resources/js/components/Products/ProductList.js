@@ -1,65 +1,75 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import axios from 'axios';
-import {isWebpSupported} from 'react-image-webp/dist/utils';
 
 export default class ProductList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+      attributes: [],
+    };
 
-    constructor() {
-        super();
-        this.state = {
-            products:[],
-            attributes:[]
-        }
-        
-        this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
-    }
+    this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
+  }
 
-    handleChangeCheckbox(event) {
-        this.props.applyCallback(event.target.value, event.target.checked);
-    }
+  componentDidMount() {
+    axios.get('/api/product').then((response) => {
+      this.setState({
+        products: response.data.productData,
+        attributes: response.data.atributeData,
+      });
+    }).catch((errors) => {
+      console.log(errors);
+    });
+  }
 
-    componentDidMount() {
-        axios.get('/api/product').then(response => {
-            this.setState({
-                products: response.data.productData,
-                attributes: response.data.atributeData
-            });
-        }).catch(errors => {
-            console.log(errors);
-        })
-    }
+  handleChangeCheckbox(event) {
+    this.props.applyCallback(event.target.value, event.target.checked);
+  }
 
-    render() {
-        return (
-            <div className="d-flex flex-wrap">
-                {this.state.products.map(product =>
-                    (
-                    <div className="card mb-4 shadow-sm">
-                        <picture>
-                            <source type="image/webp" srcSet={`images/webp/${product.picture}.webp`}/>
-                            <source type="image" srcSet={`images/${product.picture}`}/>
-                            <img className="card-img-top img-fluid" src={`images/${product.picture}`} alt="Card image cap"/>
-                        </picture>
-                        <div className="card-body">
-                            <ul className="list-unstyled">
-                                <li>{product.sku}</li>
-                                <li>{product.name}</li>
-                                <li>{product.price} $</li>
-                                {this.state.attributes.map(attribute =>(
-                                    attribute.product_id == product.id && attribute.hidden == 0 &&
-                                    <li>{attribute.name}: {attribute.attribute} {attribute.units}</li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div align="right" className="checkbox-inline custom-checkbox mr-3">
-                                <label htmlFor="delete" className="mr-1">Delete:</label>
-                                <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox}></input>
-						</div>
-                    </div>
+  render() {
+    return (
+      <div className="d-flex flex-wrap">
+        {this.state.products.map((product) => (
+          <div className="card mb-4 shadow-sm">
+            <picture>
+              <source type="image/webp" srcSet={`images/webp/${product.picture}.webp`} />
+              <source type="image" srcSet={`images/${product.picture}`} />
+              <img className="card-img-top img-fluid" src={`images/${product.picture}`} alt="Product" />
+            </picture>
+            <div className="card-body">
+              <ul className="list-unstyled">
+                <li>{product.sku}</li>
+                <li>{product.name}</li>
+                <li>
+                  {product.price}
+                  {' '}
+                  $
+                </li>
+                {this.state.attributes.map((attribute) => (
+                  attribute.product_id === product.id && attribute.hidden === 0
+                    && (
+                    <li>
+                      {attribute.name}
+                      :
+                      {' '}
+                      {attribute.attribute}
+                      {' '}
+                      {attribute.units}
+                    </li>
                     )
-                )}
-	        </div>
-        );
-    }
-
+                ))}
+              </ul>
+            </div>
+            <div align="right" className="checkbox-inline custom-checkbox mr-3">
+              <label htmlFor="delete" className="mr-1">Delete:</label>
+              <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox} />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 }

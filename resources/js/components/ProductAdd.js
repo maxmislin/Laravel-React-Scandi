@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import FormSwitch from './ProductAdd/FormSwitch';
 import axios from 'axios';
 import Errors from './Errors';
