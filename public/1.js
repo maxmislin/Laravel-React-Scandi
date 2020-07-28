@@ -277,6 +277,9 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
+/* eslint-disable react/jsx-filename-extension */
 
 
 
@@ -300,11 +303,6 @@ var ProductList = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(ProductList, [{
-    key: "handleChangeCheckbox",
-    value: function handleChangeCheckbox(event) {
-      this.props.applyCallback(event.target.value, event.target.checked);
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -317,6 +315,11 @@ var ProductList = /*#__PURE__*/function (_Component) {
       })["catch"](function (errors) {
         console.log(errors);
       });
+    }
+  }, {
+    key: "handleChangeCheckbox",
+    value: function handleChangeCheckbox(event) {
+      this.props.applyCallback(event.target.value, event.target.checked);
     }
   }, {
     key: "render",
@@ -337,13 +340,13 @@ var ProductList = /*#__PURE__*/function (_Component) {
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "card-img-top img-fluid",
           src: "images/".concat(product.picture),
-          alt: "Card image cap"
+          alt: "Product"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "card-body"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "list-unstyled"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.sku), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.price, " $"), _this3.state.attributes.map(function (attribute) {
-          return attribute.product_id == product.id && attribute.hidden == 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, attribute.name, ": ", attribute.attribute, " ", attribute.units);
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.sku), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.price, ' ', "$"), _this3.state.attributes.map(function (attribute) {
+          return attribute.product_id === product.id && attribute.hidden === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, attribute.name, ":", ' ', attribute.attribute, ' ', attribute.units);
         }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           align: "right",
           className: "checkbox-inline custom-checkbox mr-3"

@@ -2,8 +2,9 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withTranslation } from 'react-i18next';
 
-export default class ProductList extends Component {
+class ProductList extends Component {
   constructor() {
     super();
     this.state = {
@@ -30,6 +31,8 @@ export default class ProductList extends Component {
   }
 
   render() {
+    const { t } = this.props;
+
     return (
       <div className="d-flex flex-wrap">
         {this.state.products.map((product) => (
@@ -44,6 +47,7 @@ export default class ProductList extends Component {
                 <li>{product.sku}</li>
                 <li>{product.name}</li>
                 <li>
+                  {t('ProductList.card-price')}
                   {product.price}
                   {' '}
                   $
@@ -64,7 +68,7 @@ export default class ProductList extends Component {
               </ul>
             </div>
             <div align="right" className="checkbox-inline custom-checkbox mr-3">
-              <label htmlFor="delete" className="mr-1">Delete:</label>
+              <label htmlFor="delete" className="mr-1">{t('ProductList.card-delte')}</label>
               <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox} />
             </div>
           </div>
@@ -73,3 +77,7 @@ export default class ProductList extends Component {
     );
   }
 }
+
+const ProductListComponent = withTranslation()(ProductList);
+
+export default ProductListComponent;

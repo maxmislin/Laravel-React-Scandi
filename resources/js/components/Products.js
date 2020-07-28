@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import ProductList from './Products/ProductList';
+import ProductListComponent from './Products/ProductList';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import Errors from './Errors';
+import { withTranslation } from 'react-i18next';
 
-export default class App extends Component {
+class Products extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             id: [],
             key: null,
-            errors: []
+            errors: [],
+            success: false
         }
 
         this.callbackFunction = this.callbackFunction.bind(this);
@@ -42,14 +44,7 @@ export default class App extends Component {
             {
                 this.reload();
                 this.setState({id: []});
-
-                ReactDOM.render(
-                    (    
-                        <div className="alert alert-success">
-                            Products deleted
-                        </div>
-                    ),
-                document.getElementById("indexMsg"));
+                this.setState({success:true});
             }
         })
         .catch(error => {
@@ -65,26 +60,36 @@ export default class App extends Component {
     }
 
     render() {
+      const { t } = this.props;
+
         return (
             <div className="container">
                 {Object.keys(this.state.errors).length != 0 &&
                     <Errors errors={this.state.errors} />
                 }
-                <div id="indexMsg"></div>
+                {this.state.success &&
+                  <div className="alert alert-success mt-2">
+                    {t('ProductList.delete-success')}
+                  </div>
+                }
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
-                    <h2 className="h2">Product List</h2>
+                    <h2 className="h2">{t('ProductList.title')}</h2>
                     <div className="btn-toolbar mb-2 mb-md-0">
                         <div className="btn-group mr-2">
-                            <button form="DeleteForm" type="submit" className="btn btn-sm btn-outline-secondary py-2 px-2">Mass Delete Action</button>
+                            <button form="DeleteForm" type="submit" className="btn btn-sm btn-outline-secondary py-2 px-2">{t('ProductList.mass-delete')}</button>
                         </div>
                     </div>
                 </div>
 
                 <form id="DeleteForm" onSubmit={this.handleSubmit}>
-                <ProductList key={this.state.key} applyCallback = {this.callbackFunction} />
+                <ProductListComponent key={this.state.key} applyCallback = {this.callbackFunction} />
                 </form>
             </div>
         );
     }
 
 }
+
+const ProductsComponent = withTranslation()(Products);
+
+export default ProductsComponent;

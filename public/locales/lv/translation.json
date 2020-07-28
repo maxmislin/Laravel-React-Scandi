@@ -1,0 +1,49 @@
+{
+  "Header": {
+    "nav-to-productList": "Produktu saraksts",
+    "nav-to-productAdd": "Pievienot produktu"
+  },
+  "ProductList": {
+    "title": "Produktu saraksts",
+    "mass-delete": "Masveida dzēšana",
+    "card-delte": "Dzēst:",
+    "card-price": "Cena:",
+    "delete-success": "Produkti ir dzēsti!"
+  },
+  "ProductAdd": {
+    "add-success": "Produkts pievienots!",
+    "title": "Pievienot produktu",
+    "addCategory-btn": "Pievienot kategoriju",
+    "addAttribute-btn": "Pievienot atribūtu",
+    "label-for-sku": "SKU",
+    "label-for-name": "Nosaukums",
+    "label-for-price": "Cena",
+    "label-for-image": "Attēls",
+    "type-switcher": "Veida pārslēdzējs",
+    "save-btn": "Saglabāt",
+    "tip-1": "Lūdzu, ievadiet ",
+    "tip-2": " ar ",
+    "label-for-hidden": "Slēpts"
+  },
+  "Category": {
+    "add-success": "Pievienota kategorija!",
+    "title": "Pievienot kategoriju",
+    "category-h3": "Kategorija",
+    "label-for-name": "Nosaukums",
+    "save-btn": "Saglabāt"
+  },
+  "Attribute": {
+    "add-success": "Atribūts pievienots!",
+    "title": "Pievienot atribūtu",
+    "category-switcher": "Kategorija",
+    "attribute-form": "Atribūts",
+    "label-for-name": "Nosaukums",
+    "label-for-units": "Vienības(pēc izvēles)",
+    "label-for-required": "Obligāts(pēc izvēles)",
+    "label-for-numeric": "Skaitlisks(pēc izvēles)",
+    "label-for-unique": "Unikāls(pēc izvēles)",
+    "label-for-min": "Min(pēc izvēles)",
+    "label-for-max": "Max(pēc izvēles)",
+    "save-btn": "Saglabāt"
+  }
+}

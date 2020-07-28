@@ -1,0 +1,49 @@
+{
+  "Header": {
+    "nav-to-productList": "Product List",
+    "nav-to-productAdd": "Product Add"
+  },
+  "ProductList": {
+    "title": "Product List",
+    "mass-delete": "Mass Delete Action",
+    "card-delte": "Delete:",
+    "card-price": "Price:",
+    "delete-success": "Products deleted!"
+  },
+  "ProductAdd": {
+    "add-success": "Product added!",
+    "title": "Product Add",
+    "addCategory-btn": "Add Category",
+    "addAttribute-btn": "Add Attribute",
+    "label-for-sku": "SKU",
+    "label-for-name": "Name",
+    "label-for-price": "Price",
+    "label-for-image": "Image",
+    "type-switcher": "Type Switcher",
+    "save-btn": "Save",
+    "tip-1": "Please, enter ",
+    "tip-2": " in ",
+    "label-for-hidden": "Hidden"
+  },
+  "Category": {
+    "add-success": "Category added!",
+    "title": "Add Category",
+    "category-h3": "Category",
+    "label-for-name": "Name",
+    "save-btn": "Save"
+  },
+  "Attribute": {
+    "add-success": "Attribute added!",
+    "title": "Add Attribute",
+    "category-switcher": "Category",
+    "attribute-form": "Attribute",
+    "label-for-name": "Name",
+    "label-for-units": "Units(optional)",
+    "label-for-required": "Required(optional)",
+    "label-for-numeric": "Numeric(optional)",
+    "label-for-unique": "Unique(optional)",
+    "label-for-min": "Min(optional)",
+    "label-for-max": "Max(optional)",
+    "save-btn": "Save"
+  }
+}

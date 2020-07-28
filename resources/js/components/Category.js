@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Errors from './Errors';
 import axios from 'axios';
+import { withTranslation } from 'react-i18next';
 
 
-export default class Category extends Component {
+class Category extends Component {
 
     constructor(props) {
         super(props);
@@ -63,32 +64,31 @@ export default class Category extends Component {
 
 
     render() {
+      const { t } = this.props;
+
         return (
             <div className="container">
                 {Object.keys(this.state.errors).length != 0 &&
                     <Errors errors={this.state.errors} />
                 }
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
-                    <h1 className="h2">Add Category</h1>
+                    <h1 className="h2">{t('Category.title')}</h1>
                 </div>
                     
                 <form onSubmit={this.handleSubmit} id="addForm">
 
                     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-3">
-                    <h3 className="h3">Category</h3>
+                    <h3 className="h3">{t('Category.category-h3')}</h3>
                     </div>
 
                     <div className="col-md-3 mb-3">  
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">{t('Category.label-for-name')}</label>
                     <input type="text" className="form-control" value={this.state.name} onChange={this.handleChange} required="" />
-                    <div className="invalid-feedback">
-                        Please enter Name.
-                    </div>
                     </div>
 
                     <div className="col-md-3 mb-3">
                     <button form="addForm" type="submit" className="btn btn-sm btn-outline-secondary pl-5 pr-5 pt-2">
-                        <h6>Save</h6>
+                        <h6>{t('Category.save-btn')}</h6>
                     </button>
                     </div>
                 </form>
@@ -97,3 +97,8 @@ export default class Category extends Component {
     }
 
 }
+
+
+const CategoryComponent = withTranslation()(Category);
+
+export default CategoryComponent;

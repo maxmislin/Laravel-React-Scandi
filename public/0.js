@@ -411,6 +411,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+/* eslint-disable react/jsx-filename-extension */
 
 
 
@@ -469,7 +470,7 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
   }, {
     key: "handleChangeCheckBox",
     value: function handleChangeCheckBox(event) {
-      var attrValue = this.state.productAttributes[event.target.name] ? this.state.productAttributes[event.target.name].value : "";
+      var attrValue = this.state.productAttributes[event.target.name] ? this.state.productAttributes[event.target.name].value : '';
 
       var newAttr = _objectSpread(_objectSpread({}, this.state.productAttributes), {}, _defineProperty({}, event.target.name, {
         value: attrValue,
@@ -489,13 +490,13 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 mb-3"
       }, this.state.categories.map(function (category) {
-        return category.name == _this3.props.switcher && _this3.state.attributes.map(function (attribute) {
-          return category.id == attribute.category_id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        return category.name === _this3.props.switcher && _this3.state.attributes.map(function (attribute) {
+          return category.id === attribute.category_id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
             htmlFor: category.name,
             className: "mt-2"
           }, attribute.name), attribute.units != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "tip"
-          }, "Please, enter " + attribute.name + " in " + attribute.units) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please, enter " + attribute.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          }, "Please, enter ".concat(attribute.name, " in ").concat(attribute.units)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please, enter ".concat(attribute.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "text",
             className: "form-control",
             name: attribute.name,

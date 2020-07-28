@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
-import FormSwitch from './ProductAdd/FormSwitch';
+import FormSwitchComponent from './ProductAdd/FormSwitch';
 import axios from 'axios';
 import Errors from './Errors';
+import { withTranslation } from 'react-i18next';
 
-export default class Apply extends Component {
+class ProductAdd extends Component {
 
     constructor(props) {
         super(props);
@@ -100,7 +101,7 @@ export default class Apply extends Component {
             if(response.statusText == "OK")
             {
                 this.renderRedirect();
-
+                const { t } = this.props;
                 ReactDOM.render(
                     (    
                         <div className="alert alert-success">
@@ -124,6 +125,8 @@ export default class Apply extends Component {
     }
 
     render() {
+      const { t } = this.props;
+
         console.log(this.state);
         return (
             <div className="container">
@@ -132,13 +135,13 @@ export default class Apply extends Component {
                 }
                 <div id="applyMsg"></div>
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
-                    <h2 className="h2">Product Add</h2>
+                    <h2 className="h2">{t('ProductAdd.title')}</h2>
                     <div className="btn-toolbar mb-2 mb-md-0">
                         <div className="btn-group mr-2">
-                        <Link className="btn btn-sm btn-outline-secondary py-2 px-2" to="/addCategory">Add Category</Link>
+                        <Link className="btn btn-sm btn-outline-secondary py-2 px-2" to="/addCategory">{t('ProductAdd.addCategory-btn')}</Link>
                         </div>
                         <div className="btn-group mr-2">
-                        <Link className="btn btn-sm btn-outline-secondary py-2 px-2" to="/addAtribute">Add Attribute</Link>
+                        <Link className="btn btn-sm btn-outline-secondary py-2 px-2" to="/addAtribute">{t('ProductAdd.addAttribute-btn')}</Link>
                         </div>
                     </div>
                 </div>
@@ -146,36 +149,27 @@ export default class Apply extends Component {
                 <form onSubmit={this.handleSubmit} enctype="multipart/form-data">
 
                     <div className="col-md-3 mb-3">  
-                        <label htmlFor="sku">SKU</label>
+                        <label htmlFor="sku">{t('ProductAdd.label-for-sku')}</label>
                         <input type="text" className="form-control" name="sku" value={this.state.sku} onChange={this.handleChange} required="" />
-                        <div className="invalid-feedback">
-                            Please enter SKU.
-                        </div>
                     </div>
 
                     <div className="col-md-3 mb-3">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">{t('ProductAdd.label-for-name')}</label>
                         <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.handleChange} required="" />
-                        <div className="invalid-feedback">
-                            Please enter Name.
-                        </div>
                     </div>
 
                     <div className="col-md-3 mb-3">
-                        <label htmlFor="price">Price</label>
+                        <label htmlFor="price">{t('ProductAdd.label-for-price')}</label>
                         <input type="text" className="form-control" name="price" value={this.state.price} onChange={this.handleChange} required="" />
-                        <div className="invalid-feedback">
-                            Please enter price.
-                        </div>
                     </div>
 
                     <div className="col-md-3 mb-3">
-                        <label htmlFor="image">Image</label>
+                        <label htmlFor="image">{t('ProductAdd.label-for-image')}</label>
                         <input type="file" name="image" onChange={this.handleChangeImage} />
                     </div>
 
                     <div className="col-md-2 mb-3">
-                        <label>Type Switcher</label>
+                        <label>{t('ProductAdd.type-switcher')}</label>
                             <select className="browser-default custom-select" id="switcher" name="categoryName" value={this.state.categoryName} onChange={this.handleChangeSwitcher}>
                                 {this.state.categories.map(category => 
                                     <option value={category.name}>{category.name}</option>
@@ -183,11 +177,11 @@ export default class Apply extends Component {
                             </select>
                     </div>
                             
-                    <FormSwitch applyCallback = {this.callbackFunction} switcher={this.state.categoryName} productAttributes={this.state.productAttributes} />
+                    <FormSwitchComponent applyCallback = {this.callbackFunction} switcher={this.state.categoryName} productAttributes={this.state.productAttributes} />
 
                     <div className="col-md-3 mb-3">
                     <button type="submit" className="btn btn-sm btn-outline-secondary pl-5 pr-5 pt-2">
-                        <h6>Save</h6>
+                        <h6>{t('ProductAdd.save-btn')}</h6>
                     </button>
                     </div>
                 </form>
@@ -196,3 +190,7 @@ export default class Apply extends Component {
     }
 
 }
+
+const ProductAddComponent = withTranslation()(ProductAdd);
+
+export default ProductAddComponent;

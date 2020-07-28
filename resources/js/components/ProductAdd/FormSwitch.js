@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withTranslation } from 'react-i18next';
 
-export default class FormSwitch extends Component {
+class FormSwitch extends Component {
   constructor() {
     super();
     this.initialState = {
@@ -43,6 +44,8 @@ export default class FormSwitch extends Component {
   }
 
   render() {
+    const { t } = this.props;
+
     return (
       <div className="col-md-3 mb-3">
         {this.state.categories.map((category) => category.name === this.props.switcher
@@ -51,12 +54,12 @@ export default class FormSwitch extends Component {
               <div>
                 <label htmlFor={category.name} className="mt-2">{attribute.name}</label>
                 {attribute.units != null ? (
-                  <p className="tip">{`Please, enter ${attribute.name} in ${attribute.units}`}</p>
+                  <p className="tip">{t('ProductAdd.tip-1')}{attribute.name}{t('ProductAdd.tip-2')}{attribute.units}</p>
                 ) : (
-                  <p>{`Please, enter ${attribute.name}`}</p>
+                  <p>{t('ProductAdd.tip-1')}{attribute.name}</p>
                 )}
                 <input type="text" className="form-control" name={attribute.name} onChange={this.handleChange} required="" />
-                <label htmlFor="hidden" className="mt-2">Hidden</label>
+                <label htmlFor="hidden" className="mt-2">{t('ProductAdd.label-for-hidden')}</label>
                 <input type="checkbox" className="ml-1" name={attribute.name} onChange={this.handleChangeCheckBox} required="" />
               </div>
             )))}
@@ -64,3 +67,7 @@ export default class FormSwitch extends Component {
     );
   }
 }
+
+const FormSwitchComponent = withTranslation()(FormSwitch);
+
+export default FormSwitchComponent;

@@ -1,19 +1,18 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
 import loadable from '@loadable/component';
-/*import Header from './components/Header';
-import Products from './components/Products';
-import ProductAdd from './components/ProductAdd';
-import Category from './components/Category';
-import Attribute from './components/Attribute';*/
-
-const Header = loadable(() => import('./components/Header'))
+import HeaderComponent from './components/Header';
+import ProductsComponent from './components/Products';
+import ProductAddComponent from './components/ProductAdd';
+import CategoryComponent from './components/Category';
+import AttributeComponent from './components/Attribute';
+import './i18next';
+/*const Header = loadable(() => import('./components/Header'))
 const Products = loadable(() => import('./components/Products'))
 const ProductAdd = loadable(() => import('./components/ProductAdd'))
 const Category = loadable(() => import('./components/Category'))
 const Attribute = loadable(() => import('./components/Attribute'))
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('./sw.js').then(function(registration) {
@@ -25,15 +24,17 @@ if ('serviceWorker' in navigator) {
       });
     });
 }
-
+*/
 ReactDOM.render(
     (<Router>
-        <Header />
-        <Switch>
-            <Route path="/" exact component={withRouter(Products)} />
-            <Route path="/apply" exact component={withRouter(ProductAdd)} />
-            <Route path="/addCategory" exact component={withRouter(Category)} />
-            <Route path="/addAtribute" exact component={withRouter(Attribute)} />
-        </Switch>
+        <Suspense fallback="loading">
+          <HeaderComponent />
+          <Switch>
+              <Route path="/" exact component={withRouter(ProductsComponent)} />
+              <Route path="/apply" exact component={withRouter(ProductAddComponent)} />
+              <Route path="/addCategory" exact component={withRouter(CategoryComponent)} />
+              <Route path="/addAtribute" exact component={withRouter(AttributeComponent)} />
+          </Switch>
+        </Suspense>
     </Router>)
   , document.getElementById('root'));

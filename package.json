@@ -31,11 +31,15 @@
     },
     "dependencies": {
         "@loadable/component": "^5.13.1",
+        "axios": "^0.19.2",
+        "i18next": "^19.6.3",
+        "i18next-browser-languagedetector": "^5.0.0",
+        "i18next-http-backend": "^1.0.17",
         "idempotent-babel-polyfill": "^7.4.4",
+        "react": "^16.2.0",
+        "react-i18next": "^11.7.0",
         "react-image-webp": "^0.7.0",
         "react-router-dom": "^5.2.0",
-        "axios": "^0.19.2",
-        "react": "^16.2.0",
         "webp-converter": "^2.2.8"
     }
 }

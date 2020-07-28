@@ -1,0 +1,49 @@
+{
+  "Header": {
+    "nav-to-productList": "Список продуктов",
+    "nav-to-productAdd": "Добавить продукт"
+  },
+  "ProductList": {
+    "title": "Список продуктов",
+    "mass-delete": "Массовое удаление",
+    "card-delte": "Удалить:",
+    "card-price": "Цена:",
+    "delete-success": "Продукты удалены!"
+  },
+  "ProductAdd": {
+    "add-success": "Продукт добавлен!",
+    "title": "Добавить продукт",
+    "addCategory-btn": "Добавить категорию",
+    "addAttribute-btn": "Добавить атрибут",
+    "label-for-sku": "ИТП",
+    "label-for-name": "Название",
+    "label-for-price": "Цена",
+    "label-for-image": "Изображение",
+    "type-switcher": "Переключатель категорий",
+    "save-btn": "Сохранить",
+    "tip-1": "Пожалуйста введите ",
+    "tip-2": " в ",
+    "label-for-hidden": "Скрытый"
+  },
+  "Category": {
+    "add-success": "Категория добавлена!",
+    "title": "Добавить категорию",
+    "category-h3": "Категория",
+    "label-for-name": "Название",
+    "save-btn": "Сохранить"
+  },
+  "Attribute": {
+    "add-success": "Атрибут добавлен!",
+    "title": "Добавить атрибут",
+    "category-switcher": "Категория",
+    "attribute-form": "Атрибут",
+    "label-for-name": "Название",
+    "label-for-units": "Единицы измерения(опционально)",
+    "label-for-required": "Обязательный(опционально)",
+    "label-for-numeric": "Числовой(опционально)",
+    "label-for-unique": "Уникальный(опционально)",
+    "label-for-min": "Минимально(опционально)",
+    "label-for-max": "Максимально(опционально)",
+    "save-btn": "Сохранить"
+  }
+}
