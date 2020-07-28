@@ -10,9 +10,12 @@ class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
+            name_en: '',
+            name_ru: '',
+            name_lv: '',
             validationErrorMessage: [],
-            errors: []
+            errors: [],
+            language: null
         };
     
         this.handleChange = this.handleChange.bind(this);
@@ -20,7 +23,7 @@ class Category extends Component {
     }
 
     handleChange(event) {
-        this.setState({name: event.target.value});
+        this.setState({[event.target.name]: event.target.value});
     }
     
     renderRedirect() {
@@ -28,22 +31,23 @@ class Category extends Component {
     }
 
     handleSubmit(event) {
+      const { i18n } = this.props;
+      this.setState({language: i18n.language}, () => {
         axios({
-            method: 'post',
-            url: '/api/addCategories/submit',
-            data: {
-              name: this.state.name
-            }
+          method: 'post',
+          url: '/api/addCategories/submit',
+          data: this.state
         })
         .then(response => {
             if(response.statusText == "OK")
             {
                 this.renderRedirect();
+                const { t } = this.props;
 
                 ReactDOM.render(
                     (    
-                        <div className="alert alert-success">
-                            Category added
+                        <div className="alert alert-success mt-2">
+                            {t('Category.add-success')}
                         </div>
                     ),
                 document.getElementById("indexMsg"));
@@ -58,6 +62,8 @@ class Category extends Component {
                 console.log(error);
                 
         });
+      });
+        
         
         event.preventDefault();
     }
@@ -82,8 +88,18 @@ class Category extends Component {
                     </div>
 
                     <div className="col-md-3 mb-3">  
-                    <label htmlFor="name">{t('Category.label-for-name')}</label>
-                    <input type="text" className="form-control" value={this.state.name} onChange={this.handleChange} required="" />
+                    <label htmlFor="name_en">{t('Category.label-for-name-en')}</label>
+                    <input type="text" className="form-control" name="name_en" value={this.state.name_en} onChange={this.handleChange} required="" />
+                    </div>
+
+                    <div className="col-md-3 mb-3">  
+                    <label htmlFor="name_ru">{t('Category.label-for-name-ru')}</label>
+                    <input type="text" className="form-control" name="name_ru" value={this.state.name_ru} onChange={this.handleChange} required="" />
+                    </div>
+
+                    <div className="col-md-3 mb-3">  
+                    <label htmlFor="name_lv">{t('Category.label-for-name-lv')}</label>
+                    <input type="text" className="form-control" name="name_lv" value={this.state.name_lv} onChange={this.handleChange} required="" />
                     </div>
 
                     <div className="col-md-3 mb-3">

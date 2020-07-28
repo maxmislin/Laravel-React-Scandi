@@ -43,26 +43,47 @@ class FormSwitch extends Component {
     this.props.applyCallback(event.target.name, attrValue, event.target.checked);
   }
 
+  renderSwitch(lang, item) {
+    switch(lang) {
+      case 'en':
+        return item.name_en;
+      case 'ru':
+        return item.name_ru;
+      case 'lv':
+        return item.name_lv;
+      default:
+        return item.name_en;;
+    }
+  }
+
   render() {
-    const { t } = this.props;
+    const { t, i18n } = this.props;
 
     return (
       <div className="col-md-3 mb-3">
-        {this.state.categories.map((category) => category.name === this.props.switcher
-          && this.state.attributes.map((attribute) => category.id === attribute.category_id
+        {this.state.categories.map((category) => {
+          var categoryName = this.renderSwitch(i18n.language, category);
+          return (categoryName === this.props.switcher
+          && this.state.attributes.map((attribute) => {
+            var attributeName = this.renderSwitch(i18n.language, attribute);
+            return (category.id === attribute.category_id
             && (
               <div>
-                <label htmlFor={category.name} className="mt-2">{attribute.name}</label>
+                <label htmlFor={categoryName} className="mt-2">{attributeName}</label>
                 {attribute.units != null ? (
-                  <p className="tip">{t('ProductAdd.tip-1')}{attribute.name}{t('ProductAdd.tip-2')}{attribute.units}</p>
+                  <p className="tip">{t('ProductAdd.tip-1')}{attributeName}{t('ProductAdd.tip-2')}{attribute.units}</p>
                 ) : (
-                  <p>{t('ProductAdd.tip-1')}{attribute.name}</p>
+                  <p>{t('ProductAdd.tip-1')}{attributeName}</p>
                 )}
-                <input type="text" className="form-control" name={attribute.name} onChange={this.handleChange} required="" />
+                <input type="text" className="form-control" name={attributeName} onChange={this.handleChange} required="" />
                 <label htmlFor="hidden" className="mt-2">{t('ProductAdd.label-for-hidden')}</label>
-                <input type="checkbox" className="ml-1" name={attribute.name} onChange={this.handleChangeCheckBox} required="" />
+                <input type="checkbox" className="ml-1" name={attributeName} onChange={this.handleChangeCheckBox} required="" />
               </div>
-            )))}
+            )
+          )
+        })
+          )
+        })}
       </div>
     );
   }

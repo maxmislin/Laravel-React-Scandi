@@ -10,7 +10,7 @@ export default class Errors extends Component{
         }     
             
         return (
-            <div className="alert alert-danger">
+            <div className="alert alert-danger mt-2">
                 <ul>{allErrors.map(error => 
                             (
                             <li>{ error }</li>

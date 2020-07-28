@@ -29,7 +29,9 @@
     "add-success": "Pievienota kategorija!",
     "title": "Pievienot kategoriju",
     "category-h3": "Kategorija",
-    "label-for-name": "Nosaukums",
+    "label-for-name-en": "Nosaukums angļu valodā",
+    "label-for-name-ru": "Nosaukums krievu valodā",
+    "label-for-name-lv": "Nosaukums latviešu valodā",
     "save-btn": "Saglabāt"
   },
   "Attribute": {
@@ -37,7 +39,9 @@
     "title": "Pievienot atribūtu",
     "category-switcher": "Kategorija",
     "attribute-form": "Atribūts",
-    "label-for-name": "Nosaukums",
+    "label-for-name-en": "Nosaukums angļu valodā",
+    "label-for-name-ru": "Nosaukums krievu valodā",
+    "label-for-name-lv": "Nosaukums latviešu valodā",
     "label-for-units": "Vienības(pēc izvēles)",
     "label-for-required": "Obligāts(pēc izvēles)",
     "label-for-numeric": "Skaitlisks(pēc izvēles)",

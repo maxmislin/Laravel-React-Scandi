@@ -22,16 +22,31 @@ class deleteRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    { 
         return [
             'id' => 'array|min:1'
         ];
     }
 
     public function messages()
-    {
-        return[
+    { 
+      switch ($this->language) {
+        case "en":
+          return[
             'id.min' => 'Nothing to delete.'
-        ];
+          ];
+          break;
+        case "ru":
+          return[
+            'id.min' => 'Нечего удалять.'
+          ];
+          break;
+        case "lv":
+          return[
+            'id.min' => 'Nav ko dzēst.'
+          ];
+          break;
     }
+  
+  }
 }

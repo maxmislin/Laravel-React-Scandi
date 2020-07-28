@@ -13,11 +13,13 @@ class Products extends Component {
             id: [],
             key: null,
             errors: [],
-            success: false
+            success: false,
+            language: null
         }
 
         this.callbackFunction = this.callbackFunction.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     callbackFunction(id, checked) {
@@ -34,10 +36,12 @@ class Products extends Component {
     }
 
     handleSubmit(event) {
+      const { i18n } = this.props;
+      this.setState({language: i18n.language}, () => {
         axios({
-            method: 'post',
-            url: '/api/delete',
-            data: this.state
+          method: 'post',
+          url: '/api/delete',
+          data: this.state
         })
         .then(response => {
             if(response.statusText == "OK")
@@ -55,8 +59,9 @@ class Products extends Component {
             else
                 console.log(error);
         });
+      });
         
-        event.preventDefault();
+      event.preventDefault();
     }
 
     render() {
@@ -72,6 +77,7 @@ class Products extends Component {
                     {t('ProductList.delete-success')}
                   </div>
                 }
+                <div id="indexMsg"></div>
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3">
                     <h2 className="h2">{t('ProductList.title')}</h2>
                     <div className="btn-toolbar mb-2 mb-md-0">

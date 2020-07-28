@@ -14,13 +14,18 @@ use Illuminate\Support\Facades\Validator;
 class applyController extends Controller
 {
     public function submit(applyRequest $req) {
-        //dd($req);
         $applyProduct = new Product();
-        $category = Category::where('name', '=', $req->categoryName)->first();
+        $category = Category::where(function ($query) use ($req) {
+          $query->where('name_en', '=', $req->categoryName)
+                ->orWhere('name_ru', '=', $req->categoryName)
+                ->orWhere('name_lv', '=', $req->categoryName);
+        })->first();
         $attributes = Attribute::where('category_id', '=', $category->id)->get();
 
         foreach($attributes as $attribute){
-            $attribute->name = str_replace(" ","_",$attribute->name);
+            $attribute->name_en = str_replace(" ","_",$attribute->name_en);
+            $attribute->name_ru = str_replace(" ","_",$attribute->name_ru);
+            $attribute->name_lv = str_replace(" ","_",$attribute->name_lv);
         }
         
         $applyProduct->category_id = $category->id;

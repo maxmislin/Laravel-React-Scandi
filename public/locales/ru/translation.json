@@ -29,7 +29,9 @@
     "add-success": "Категория добавлена!",
     "title": "Добавить категорию",
     "category-h3": "Категория",
-    "label-for-name": "Название",
+    "label-for-name-en": "Название на английском",
+    "label-for-name-ru": "Название на русском",
+    "label-for-name-lv": "Название на латышском",
     "save-btn": "Сохранить"
   },
   "Attribute": {
@@ -37,7 +39,9 @@
     "title": "Добавить атрибут",
     "category-switcher": "Категория",
     "attribute-form": "Атрибут",
-    "label-for-name": "Название",
+    "label-for-name-en": "Название на английском",
+    "label-for-name-ru": "Название на русском",
+    "label-for-name-lv": "Название на латышском",
     "label-for-units": "Единицы измерения(опционально)",
     "label-for-required": "Обязательный(опционально)",
     "label-for-numeric": "Числовой(опционально)",

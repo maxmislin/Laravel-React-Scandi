@@ -28,10 +28,11 @@ class Attribute extends Component {
     }
 
     componentDidMount() {
+      const { i18n } = this.props;
         axios.get('/api/categories').then(response => {
             this.setState({
                 categories: response.data,
-                categoryName: response.data[0].name
+                categoryName: this.renderSwitch(i18n.language, response.data[0])
             });
         }).catch(errors => {
             console.log(errors);
@@ -51,29 +52,23 @@ class Attribute extends Component {
     }
 
     handleSubmit(event) {
+      const { i18n } = this.props;
+      this.setState({language: i18n.language}, () => {
         axios({
-            method: 'post',
-            url: '/api/addAttributes/submit',
-            data: {
-                categoryName: this.state.categoryName, 
-                name: this.state.name,
-                units: this.state.units,
-                required: this.state.required,
-                numeric: this.state.numeric,
-                unique: this.state.unique,
-                min: this.state.min,
-                max: this.state.max
-            }
+          method: 'post',
+          url: '/api/addAttributes/submit',
+          data: this.state
         })
         .then(response => {
             if(response.statusText == "OK")
             {
                 this.renderRedirect();
+                const { t } = this.props;
 
                 ReactDOM.render(
                     (    
-                        <div className="alert alert-success">
-                            Attribute added
+                        <div className="alert alert-success mt-2">
+                            {t('Attribute.add-success')}
                         </div>
                     ),
                 document.getElementById("indexMsg"));
@@ -87,12 +82,27 @@ class Attribute extends Component {
             else
                 console.log(error);
         });
+      });
+        
         
         event.preventDefault();
     }
 
+    renderSwitch(lang, item) {
+      switch(lang) {
+        case 'en':
+          return item.name_en;
+        case 'ru':
+          return item.name_ru;
+        case 'lv':
+          return item.name_lv;
+        default:
+          return item.name_en;;
+      }
+    }
+
     render() {
-      const { t } = this.props;
+      const { t, i18n } = this.props;
 
         return (
             <div className="container">
@@ -110,9 +120,12 @@ class Attribute extends Component {
                     <div className="col-md-2 mb-3">
                         <label>{t('Attribute.category-switcher')}</label>
                         <select className="browser-default custom-select" id="switcher" name="categoryName" value={this.state.categoryName} onChange={this.handleChange}>
-                            {this.state.categories.map(category => 
-                                <option value={category.name}>{category.name}</option>
-                            )}
+                                {this.state.categories.map(category => {
+                                    var categoryName = this.renderSwitch(i18n.language, category);
+                                    return (<option value={categoryName}>{categoryName}</option>)
+                                    }
+                                  )
+                                }
                         </select>
                     </div>
 
@@ -121,10 +134,20 @@ class Attribute extends Component {
                     </div>
 
                     <div className="col-md-3 mb-3">  
-                        <label htmlFor="name">{t('Attribute.label-for-name')}</label>
-                        <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.handleChange} required="" />
+                        <label htmlFor="name_en">{t('Attribute.label-for-name-en')}</label>
+                        <input type="text" className="form-control" name="name_en" value={this.state.name_en} onChange={this.handleChange} required="" />
                     </div>
                     
+                    <div className="col-md-3 mb-3">  
+                        <label htmlFor="name_ru">{t('Attribute.label-for-name-ru')}</label>
+                        <input type="text" className="form-control" name="name_ru" value={this.state.name_ru} onChange={this.handleChange} required="" />
+                    </div>
+
+                    <div className="col-md-3 mb-3">  
+                        <label htmlFor="name_lv">{t('Attribute.label-for-name-lv')}</label>
+                        <input type="text" className="form-control" name="name_lv" value={this.state.name_lv} onChange={this.handleChange} required="" />
+                    </div>
+
                     <div className="col-md-3 mb-3">  
                         <label htmlFor="units">{t('Attribute.label-for-units')}</label>
                         <input type="text" className="form-control" name="units" value={this.state.units} onChange={this.handleChange} />

@@ -75167,10 +75167,11 @@ var Attribute = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      var i18n = this.props.i18n;
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/categories').then(function (response) {
         _this2.setState({
           categories: response.data,
-          categoryName: response.data[0].name
+          categoryName: _this2.renderSwitch(i18n.language, response.data[0])
         });
       })["catch"](function (errors) {
         console.log(errors);
@@ -75196,42 +75197,61 @@ var Attribute = /*#__PURE__*/function (_Component) {
     value: function handleSubmit(event) {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
-        method: 'post',
-        url: '/api/addAttributes/submit',
-        data: {
-          categoryName: this.state.categoryName,
-          name: this.state.name,
-          units: this.state.units,
-          required: this.state.required,
-          numeric: this.state.numeric,
-          unique: this.state.unique,
-          min: this.state.min,
-          max: this.state.max
-        }
-      }).then(function (response) {
-        if (response.statusText == "OK") {
-          _this3.renderRedirect();
+      var i18n = this.props.i18n;
+      this.setState({
+        language: i18n.language
+      }, function () {
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'post',
+          url: '/api/addAttributes/submit',
+          data: _this3.state
+        }).then(function (response) {
+          if (response.statusText == "OK") {
+            _this3.renderRedirect();
 
-          react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "alert alert-success"
-          }, "Attribute added"), document.getElementById("indexMsg"));
-        }
-      })["catch"](function (error) {
-        if (error.response.status == 422) {
-          var errors = error.response.data.errors;
+            var t = _this3.props.t;
+            react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "alert alert-success mt-2"
+            }, t('Attribute.add-success')), document.getElementById("indexMsg"));
+          }
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            var errors = error.response.data.errors;
 
-          _this3.setState({
-            errors: errors
-          });
-        } else console.log(error);
+            _this3.setState({
+              errors: errors
+            });
+          } else console.log(error);
+        });
       });
       event.preventDefault();
     }
   }, {
+    key: "renderSwitch",
+    value: function renderSwitch(lang, item) {
+      switch (lang) {
+        case 'en':
+          return item.name_en;
+
+        case 'ru':
+          return item.name_ru;
+
+        case 'lv':
+          return item.name_lv;
+
+        default:
+          return item.name_en;
+          ;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var t = this.props.t;
+      var _this4 = this;
+
+      var _this$props = this.props,
+          t = _this$props.t,
+          i18n = _this$props.i18n;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, Object.keys(this.state.errors).length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -75252,9 +75272,11 @@ var Attribute = /*#__PURE__*/function (_Component) {
         value: this.state.categoryName,
         onChange: this.handleChange
       }, this.state.categories.map(function (category) {
+        var categoryName = _this4.renderSwitch(i18n.language, category);
+
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          value: category.name
-        }, category.name);
+          value: categoryName
+        }, categoryName);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
@@ -75262,12 +75284,34 @@ var Attribute = /*#__PURE__*/function (_Component) {
       }, t('Attribute.attribute-form'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "name"
-      }, t('Attribute.label-for-name')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        htmlFor: "name_en"
+      }, t('Attribute.label-for-name-en')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "form-control",
-        name: "name",
-        value: this.state.name,
+        name: "name_en",
+        value: this.state.name_en,
+        onChange: this.handleChange,
+        required: ""
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-3 mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name_ru"
+      }, t('Attribute.label-for-name-ru')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        name: "name_ru",
+        value: this.state.name_ru,
+        onChange: this.handleChange,
+        required: ""
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-3 mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name_lv"
+      }, t('Attribute.label-for-name-lv')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        name: "name_lv",
+        value: this.state.name_lv,
         onChange: this.handleChange,
         required: ""
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -75370,6 +75414,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_i18next__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-i18next */ "./node_modules/react-i18next/dist/es/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -75408,9 +75454,12 @@ var Category = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      name: '',
+      name_en: '',
+      name_ru: '',
+      name_lv: '',
       validationErrorMessage: [],
-      errors: []
+      errors: [],
+      language: null
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -75420,9 +75469,7 @@ var Category = /*#__PURE__*/function (_Component) {
   _createClass(Category, [{
     key: "handleChange",
     value: function handleChange(event) {
-      this.setState({
-        name: event.target.value
-      });
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
     }
   }, {
     key: "renderRedirect",
@@ -75434,28 +75481,32 @@ var Category = /*#__PURE__*/function (_Component) {
     value: function handleSubmit(event) {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_3___default()({
-        method: 'post',
-        url: '/api/addCategories/submit',
-        data: {
-          name: this.state.name
-        }
-      }).then(function (response) {
-        if (response.statusText == "OK") {
-          _this2.renderRedirect();
+      var i18n = this.props.i18n;
+      this.setState({
+        language: i18n.language
+      }, function () {
+        axios__WEBPACK_IMPORTED_MODULE_3___default()({
+          method: 'post',
+          url: '/api/addCategories/submit',
+          data: _this2.state
+        }).then(function (response) {
+          if (response.statusText == "OK") {
+            _this2.renderRedirect();
 
-          react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "alert alert-success"
-          }, "Category added"), document.getElementById("indexMsg"));
-        }
-      })["catch"](function (error) {
-        if (error.response.status == 422) {
-          var errors = error.response.data.errors;
+            var t = _this2.props.t;
+            react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "alert alert-success mt-2"
+            }, t('Category.add-success')), document.getElementById("indexMsg"));
+          }
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            var errors = error.response.data.errors;
 
-          _this2.setState({
-            errors: errors
-          });
-        } else console.log(error);
+            _this2.setState({
+              errors: errors
+            });
+          } else console.log(error);
+        });
       });
       event.preventDefault();
     }
@@ -75481,11 +75532,34 @@ var Category = /*#__PURE__*/function (_Component) {
       }, t('Category.category-h3'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "name"
-      }, t('Category.label-for-name')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        htmlFor: "name_en"
+      }, t('Category.label-for-name-en')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "form-control",
-        value: this.state.name,
+        name: "name_en",
+        value: this.state.name_en,
+        onChange: this.handleChange,
+        required: ""
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-3 mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name_ru"
+      }, t('Category.label-for-name-ru')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        name: "name_ru",
+        value: this.state.name_ru,
+        onChange: this.handleChange,
+        required: ""
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-3 mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name_lv"
+      }, t('Category.label-for-name-lv')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        name: "name_lv",
+        value: this.state.name_lv,
         onChange: this.handleChange,
         required: ""
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -75563,7 +75637,7 @@ var Errors = /*#__PURE__*/function (_Component) {
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "alert alert-danger"
+        className: "alert alert-danger mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, allErrors.map(function (error) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, error);
       })));
@@ -75759,7 +75833,8 @@ var ProductAdd = /*#__PURE__*/function (_Component) {
       image: null,
       productAttributes: {},
       errors: [],
-      key: null
+      key: null,
+      language: null
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleChangeSwitcher = _this.handleChangeSwitcher.bind(_assertThisInitialized(_this));
@@ -75791,14 +75866,26 @@ var ProductAdd = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      var i18n = this.props.i18n;
       axios__WEBPACK_IMPORTED_MODULE_4___default.a.get('/api/categories').then(function (response) {
         _this2.setState({
           categories: response.data,
-          categoryName: response.data[0].name
+          categoryName: _this2.renderSwitch(i18n.language, response.data[0])
         });
       })["catch"](function (errors) {
         console.log(errors);
       });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var i18n = this.props.i18n;
+
+      if (prevProps !== this.props) {
+        this.setState({
+          categoryName: this.renderSwitch(i18n.language, this.state.categories[0])
+        });
+      }
     }
   }, {
     key: "handleChange",
@@ -75851,35 +75938,61 @@ var ProductAdd = /*#__PURE__*/function (_Component) {
     value: function handleSubmit(event) {
       var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_4___default()({
-        method: 'post',
-        url: '/api/apply/submit',
-        data: this.state
-      }).then(function (response) {
-        if (response.statusText == "OK") {
-          _this4.renderRedirect();
+      var i18n = this.props.i18n;
+      this.setState({
+        language: i18n.language
+      }, function () {
+        axios__WEBPACK_IMPORTED_MODULE_4___default()({
+          method: 'post',
+          url: '/api/apply/submit',
+          data: _this4.state
+        }).then(function (response) {
+          if (response.statusText == "OK") {
+            _this4.renderRedirect();
 
-          var t = _this4.props.t;
-          react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "alert alert-success"
-          }, "Product added"), document.getElementById("indexMsg"));
-        }
-      })["catch"](function (error) {
-        if (error.response.status == 422) {
-          var errors = error.response.data.errors;
+            var t = _this4.props.t;
+            react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "alert alert-success mt-2"
+            }, t('ProductAdd.add-success')), document.getElementById("indexMsg"));
+          }
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            var errors = error.response.data.errors;
 
-          _this4.setState({
-            errors: errors
-          });
-        } else console.log(error);
+            _this4.setState({
+              errors: errors
+            });
+          } else console.log(error);
+        });
       });
       event.preventDefault();
     }
   }, {
+    key: "renderSwitch",
+    value: function renderSwitch(lang, item) {
+      switch (lang) {
+        case 'en':
+          return item.name_en;
+
+        case 'ru':
+          return item.name_ru;
+
+        case 'lv':
+          return item.name_lv;
+
+        default:
+          return item.name_en;
+          ;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var t = this.props.t;
-      console.log(this.state);
+      var _this5 = this;
+
+      var _this$props = this.props,
+          t = _this$props.t,
+          i18n = _this$props.i18n;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, Object.keys(this.state.errors).length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -75955,9 +76068,11 @@ var ProductAdd = /*#__PURE__*/function (_Component) {
         value: this.state.categoryName,
         onChange: this.handleChangeSwitcher
       }, this.state.categories.map(function (category) {
+        var categoryName = _this5.renderSwitch(i18n.language, category);
+
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          value: category.name
-        }, category.name);
+          value: categoryName
+        }, categoryName);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductAdd_FormSwitch__WEBPACK_IMPORTED_MODULE_3__["default"], {
         applyCallback: this.callbackFunction,
         switcher: this.state.categoryName,
@@ -76094,24 +76209,48 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
       this.props.applyCallback(event.target.name, attrValue, event.target.checked);
     }
   }, {
+    key: "renderSwitch",
+    value: function renderSwitch(lang, item) {
+      switch (lang) {
+        case 'en':
+          return item.name_en;
+
+        case 'ru':
+          return item.name_ru;
+
+        case 'lv':
+          return item.name_lv;
+
+        default:
+          return item.name_en;
+          ;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      var t = this.props.t;
+      var _this$props = this.props,
+          t = _this$props.t,
+          i18n = _this$props.i18n;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 mb-3"
       }, this.state.categories.map(function (category) {
-        return category.name === _this3.props.switcher && _this3.state.attributes.map(function (attribute) {
+        var categoryName = _this3.renderSwitch(i18n.language, category);
+
+        return categoryName === _this3.props.switcher && _this3.state.attributes.map(function (attribute) {
+          var attributeName = _this3.renderSwitch(i18n.language, attribute);
+
           return category.id === attribute.category_id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-            htmlFor: category.name,
+            htmlFor: categoryName,
             className: "mt-2"
-          }, attribute.name), attribute.units != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          }, attributeName), attribute.units != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "tip"
-          }, t('ProductAdd.tip-1'), attribute.name, t('ProductAdd.tip-2'), attribute.units) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, t('ProductAdd.tip-1'), attribute.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          }, t('ProductAdd.tip-1'), attributeName, t('ProductAdd.tip-2'), attribute.units) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, t('ProductAdd.tip-1'), attributeName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "text",
             className: "form-control",
-            name: attribute.name,
+            name: attributeName,
             onChange: _this3.handleChange,
             required: ""
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -76120,7 +76259,7 @@ var FormSwitch = /*#__PURE__*/function (_Component) {
           }, t('ProductAdd.label-for-hidden')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "checkbox",
             className: "ml-1",
-            name: attribute.name,
+            name: attributeName,
             onChange: _this3.handleChangeCheckBox,
             required: ""
           }));
@@ -76211,7 +76350,8 @@ var Products = /*#__PURE__*/function (_Component) {
       id: [],
       key: null,
       errors: [],
-      success: false
+      success: false,
+      language: null
     };
     _this.callbackFunction = _this.callbackFunction.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -76244,30 +76384,35 @@ var Products = /*#__PURE__*/function (_Component) {
     value: function handleSubmit(event) {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
-        method: 'post',
-        url: '/api/delete',
-        data: this.state
-      }).then(function (response) {
-        if (response.statusText == "OK") {
-          _this2.reload();
+      var i18n = this.props.i18n;
+      this.setState({
+        language: i18n.language
+      }, function () {
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'post',
+          url: '/api/delete',
+          data: _this2.state
+        }).then(function (response) {
+          if (response.statusText == "OK") {
+            _this2.reload();
 
-          _this2.setState({
-            id: []
-          });
+            _this2.setState({
+              id: []
+            });
 
-          _this2.setState({
-            success: true
-          });
-        }
-      })["catch"](function (error) {
-        if (error.response.status == 422) {
-          var errors = error.response.data.errors;
+            _this2.setState({
+              success: true
+            });
+          }
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            var errors = error.response.data.errors;
 
-          _this2.setState({
-            errors: errors
-          });
-        } else console.log(error);
+            _this2.setState({
+              errors: errors
+            });
+          } else console.log(error);
+        });
       });
       event.preventDefault();
     }
@@ -76282,6 +76427,8 @@ var Products = /*#__PURE__*/function (_Component) {
       }), this.state.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "alert alert-success mt-2"
       }, t('ProductList.delete-success')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "indexMsg"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-4 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "h2"

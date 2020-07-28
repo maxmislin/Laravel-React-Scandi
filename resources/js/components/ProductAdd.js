@@ -20,7 +20,8 @@ class ProductAdd extends Component {
             image: null,
             productAttributes: {},
             errors: [],
-            key: null
+            key: null,
+            language: null
         }
 
         
@@ -41,14 +42,25 @@ class ProductAdd extends Component {
     }
 
     componentDidMount() {
+      const { i18n } = this.props;
         axios.get('/api/categories').then(response => {
             this.setState({
                 categories: response.data,
-                categoryName: response.data[0].name
+                categoryName: this.renderSwitch(i18n.language, response.data[0])
             });
         }).catch(errors => {
             console.log(errors);
         })
+    }
+
+    componentDidUpdate(prevProps) {
+      const { i18n } = this.props;
+
+      if (prevProps !== this.props) {
+        this.setState({
+          categoryName: this.renderSwitch(i18n.language, this.state.categories[0])
+        });
+      }
     }
 
     handleChange(event) {
@@ -92,10 +104,12 @@ class ProductAdd extends Component {
     }
 
     handleSubmit(event) {
+      const { i18n } = this.props;
+      this.setState({language: i18n.language}, () => {
         axios({
-            method: 'post',
-            url: '/api/apply/submit',
-            data: this.state
+          method: 'post',
+          url: '/api/apply/submit',
+          data: this.state
         })
         .then(response => {
             if(response.statusText == "OK")
@@ -104,8 +118,8 @@ class ProductAdd extends Component {
                 const { t } = this.props;
                 ReactDOM.render(
                     (    
-                        <div className="alert alert-success">
-                            Product added
+                        <div className="alert alert-success mt-2">
+                            {t('ProductAdd.add-success')}
                         </div>
                     ),
                 document.getElementById("indexMsg"));
@@ -120,14 +134,27 @@ class ProductAdd extends Component {
                 console.log(error);
                 
         });
+      });
         
-        event.preventDefault();
+      event.preventDefault();
+    }
+
+    renderSwitch(lang, item) {
+      switch(lang) {
+        case 'en':
+          return item.name_en;
+        case 'ru':
+          return item.name_ru;
+        case 'lv':
+          return item.name_lv;
+        default:
+          return item.name_en;;
+      }
     }
 
     render() {
-      const { t } = this.props;
+      const { t, i18n } = this.props;
 
-        console.log(this.state);
         return (
             <div className="container">
                 {Object.keys(this.state.errors).length != 0 &&
@@ -171,9 +198,12 @@ class ProductAdd extends Component {
                     <div className="col-md-2 mb-3">
                         <label>{t('ProductAdd.type-switcher')}</label>
                             <select className="browser-default custom-select" id="switcher" name="categoryName" value={this.state.categoryName} onChange={this.handleChangeSwitcher}>
-                                {this.state.categories.map(category => 
-                                    <option value={category.name}>{category.name}</option>
-                                )}
+                                {this.state.categories.map(category => {
+                                    var categoryName = this.renderSwitch(i18n.language, category);
+                                    return (<option value={categoryName}>{categoryName}</option>)
+                                    }
+                                  )
+                                }
                             </select>
                     </div>
                             

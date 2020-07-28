@@ -29,7 +29,9 @@
     "add-success": "Category added!",
     "title": "Add Category",
     "category-h3": "Category",
-    "label-for-name": "Name",
+    "label-for-name-en": "Name in english",
+    "label-for-name-ru": "Name in russian",
+    "label-for-name-lv": "Name in latvian",
     "save-btn": "Save"
   },
   "Attribute": {
@@ -37,7 +39,9 @@
     "title": "Add Attribute",
     "category-switcher": "Category",
     "attribute-form": "Attribute",
-    "label-for-name": "Name",
+    "label-for-name-en": "Name in english",
+    "label-for-name-ru": "Name in russian",
+    "label-for-name-lv": "Name in latvian",
     "label-for-units": "Units(optional)",
     "label-for-required": "Required(optional)",
     "label-for-numeric": "Numeric(optional)",
