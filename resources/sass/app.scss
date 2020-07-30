@@ -43,6 +43,16 @@
   outline:none;
 }
 
+.select-currency {
+  border:none;
+  outline:none;
+  background: none;
+}
+
+.select-currency:active {
+  color: #999;
+}
+
 @media (max-width: 500px) {
   .card {
     margin: 2%;

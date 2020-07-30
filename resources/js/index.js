@@ -26,6 +26,7 @@ if ('serviceWorker' in navigator) {
     });
 }
 */
+
 ReactDOM.render(
     (<Router>
         <Suspense fallback="loading">

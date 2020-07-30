@@ -75696,12 +75696,54 @@ var Header = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(Header);
 
   function Header(props) {
+    var _this;
+
     _classCallCheck(this, Header);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      currencyList: [],
+      key: null
+    };
+    return _this;
   }
 
   _createClass(Header, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch('http://www.floatrates.com/daily/usd.json').then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this2.setState({
+          currencyList: [{
+            code: 'USD',
+            rate: 1
+          }, data.eur, data.gbp, data.rub]
+        }, function () {
+          _this2.state.currencyList.forEach(function (currency) {
+            localStorage.setItem(currency.code, currency.rate);
+          });
+
+          if (localStorage.getItem('currentCurrency') != undefined) return;
+          localStorage.setItem('currentCurrency', _this2.state.currencyList[0].code);
+
+          _this2.setState({
+            key: Math.random()
+          });
+        });
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
+    }
+  }, {
+    key: "handleChangeSwitcher",
+    value: function handleChangeSwitcher(event) {
+      localStorage.setItem('currentCurrency', event.target.value);
+      window.location.reload(false);
+    }
+  }, {
     key: "handleClick",
     value: function handleClick(lang, i18n) {
       i18n.changeLanguage(lang);
@@ -75709,7 +75751,7 @@ var Header = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           t = _this$props.t,
@@ -75717,7 +75759,7 @@ var Header = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "site-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "d-flex flex-column flex-md-row align-items-center p-3 px-md-4 shadow-sm"
+        className: "d-flex flex-column flex-md-row align-items-center p-3 px-md-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "header-title my-0 mr-md-auto font-weight-normal"
       }, "Scandiweb"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -75735,20 +75777,27 @@ var Header = /*#__PURE__*/function (_Component) {
         className: "d-flex justify-content-end mr-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this.handleClick('en', i18n);
+          return _this3.handleClick('en', i18n);
         },
         className: "astext header-navigation pr-2 pb-2"
       }, "EN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this.handleClick('ru', i18n);
+          return _this3.handleClick('ru', i18n);
         },
         className: "astext header-navigation pr-2 pb-2"
       }, "RU"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this.handleClick('lv', i18n);
+          return _this3.handleClick('lv', i18n);
         },
         className: "astext header-navigation pr-2 pb-2"
-      }, "LV")));
+      }, "LV"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        className: "select-currency mb-2 header-navigation",
+        id: "switcher",
+        name: "userGroupName",
+        onChange: this.handleChangeSwitcher
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, localStorage.getItem('currentCurrency')), this.state.currencyList.map(function (currency) {
+        return currency.code !== localStorage.getItem('currentCurrency') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, currency.code);
+      }))));
     }
   }]);
 
@@ -76355,7 +76404,8 @@ var Products = /*#__PURE__*/function (_Component) {
       userGroups: [],
       userGroupCategories: [],
       category_ids: [],
-      categories: []
+      categories: [],
+      currency: localStorage.getItem('currentCurrency')
     };
     _this.handleChangeSwitcher = _this.handleChangeSwitcher.bind(_assertThisInitialized(_this));
     _this.callbackFunction = _this.callbackFunction.bind(_assertThisInitialized(_this));
@@ -76487,7 +76537,7 @@ var Products = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           t = _this$props.t,
           i18n = _this$props.i18n;
-      console.log(this.state);
+      var currency = localStorage.getItem('currency');
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, Object.keys(this.state.errors).length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Errors__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -76527,7 +76577,8 @@ var Products = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products_ProductList__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: this.state.key,
         category_ids: this.state.category_ids,
-        applyCallback: this.callbackFunction
+        applyCallback: this.callbackFunction,
+        currency: this.state.currency
       })));
     }
   }]);
@@ -76640,6 +76691,31 @@ var ProductList = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "renderSwitchCurrency",
+    value: function renderSwitchCurrency() {
+      var EUR = localStorage.getItem('EUR');
+      var GBP = localStorage.getItem('GBP');
+      var RUB = localStorage.getItem('RUB');
+      var USD = localStorage.getItem('USD');
+
+      switch (this.props.currency) {
+        case 'EUR':
+          return [EUR, '€'];
+
+        case 'RUB':
+          return [RUB, '₽'];
+
+        case 'GBP':
+          return [GBP, '£'];
+
+        case 'USD':
+          return [USD, '$'];
+
+        default:
+          return [1, '$'];
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -76647,6 +76723,7 @@ var ProductList = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           t = _this$props.t,
           i18n = _this$props.i18n;
+      var currency = this.renderSwitchCurrency();
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex flex-wrap"
       }, this.state.products.map(function (product) {
@@ -76666,7 +76743,7 @@ var ProductList = /*#__PURE__*/function (_Component) {
           className: "card-body"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "list-unstyled"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.sku), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, t('ProductList.card-price'), product.price, ' ', "$"), _this3.state.attributes.map(function (attribute) {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.sku), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, t('ProductList.card-price'), (product.price * currency[0]).toFixed(2), ' ', currency[1]), _this3.state.attributes.map(function (attribute) {
           return attribute.product_id === product.id && attribute.hidden === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, _this3.renderSwitch(i18n.language, attribute), ":", ' ', attribute.attribute, ' ', attribute.units);
         }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           align: "right",

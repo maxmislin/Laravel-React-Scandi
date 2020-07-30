@@ -17,7 +17,8 @@ class Products extends Component {
             userGroups: [],
             userGroupCategories: [],
             category_ids: [],
-            categories: []
+            categories: [],
+            currency: localStorage.getItem('currentCurrency')
         }
 
         this.handleChangeSwitcher = this.handleChangeSwitcher.bind(this);
@@ -117,7 +118,7 @@ class Products extends Component {
 
     render() {
       const { t, i18n } = this.props;
-      console.log(this.state);
+      const currency = localStorage.getItem('currency');
         return (
             <div className="container">
                 {Object.keys(this.state.errors).length != 0 &&
@@ -152,7 +153,7 @@ class Products extends Component {
                 </div>
 
                 <form id="DeleteForm" onSubmit={this.handleSubmit}>
-                <ProductListComponent key={this.state.key} category_ids={this.state.category_ids} applyCallback = {this.callbackFunction} />
+                <ProductListComponent key={this.state.key} category_ids={this.state.category_ids} applyCallback = {this.callbackFunction} currency={this.state.currency}/>
                 </form>
             </div>
         );

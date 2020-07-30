@@ -43,8 +43,29 @@ class ProductList extends Component {
     }
   }
 
+  renderSwitchCurrency() {
+    const EUR = localStorage.getItem('EUR');
+    const GBP = localStorage.getItem('GBP');
+    const RUB = localStorage.getItem('RUB');
+    const USD = localStorage.getItem('USD');
+    
+    switch(this.props.currency) {
+      case 'EUR':
+        return [EUR, '€'];
+      case 'RUB':
+        return [RUB, '₽'];
+      case 'GBP':
+        return [GBP, '£'];
+      case 'USD':
+        return [USD, '$'];
+      default:
+        return [1, '$'];
+    }
+  }
+
   render() {
     const { t, i18n } = this.props;
+    const currency = this.renderSwitchCurrency();
 
     return (
       <div className="d-flex flex-wrap">
@@ -63,9 +84,9 @@ class ProductList extends Component {
                 <li>{product.name}</li>
                 <li>
                   {t('ProductList.card-price')}
-                  {product.price}
+                  {(product.price * currency[0]).toFixed(2)}
                   {' '}
-                  $
+                  {currency[1]}
                 </li>
                 {this.state.attributes.map((attribute) => (
                   attribute.product_id === product.id && attribute.hidden === 0
