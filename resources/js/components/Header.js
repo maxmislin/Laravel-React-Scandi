@@ -26,6 +26,9 @@ class Header extends Component {
                         <Link className="p-2 header-navigation " to="/apply">
                             {t('Header.nav-to-productAdd')}
                         </Link>
+                        <Link className="p-2 header-navigation " to="/addUserGroup">
+                            {t('Header.nav-to-addUserGroup')}
+                        </Link>
                     </nav>
                 </div>
                 <div className="d-flex justify-content-end mr-5">

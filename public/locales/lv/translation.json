@@ -1,14 +1,17 @@
 {
   "Header": {
     "nav-to-productList": "Produktu saraksts",
-    "nav-to-productAdd": "Pievienot produktu"
+    "nav-to-productAdd": "Pievienot produktu",
+    "nav-to-addUserGroup": "Pievienot lietotāju grupu"
   },
   "ProductList": {
     "title": "Produktu saraksts",
     "mass-delete": "Masveida dzēšana",
     "card-delte": "Dzēst:",
     "card-price": "Cena:",
-    "delete-success": "Produkti ir dzēsti!"
+    "delete-success": "Produkti ir dzēsti!",
+    "all-products-option": "Visi produkti",
+    "user-group-switch": "Lietotāju grupa:"
   },
   "ProductAdd": {
     "add-success": "Produkts pievienots!",
@@ -48,6 +51,13 @@
     "label-for-unique": "Unikāls(pēc izvēles)",
     "label-for-min": "Min(pēc izvēles)",
     "label-for-max": "Max(pēc izvēles)",
+    "save-btn": "Saglabāt"
+  },
+  "AddUserGroup": {
+    "add-success": "Pievienota lietotāju grupa!",
+    "title": "Pievienot lietotāju grupu",
+    "user-group-h3": "Lietotāju grupa",
+    "category-switcher": "Kategorija",
     "save-btn": "Saglabāt"
   }
 }

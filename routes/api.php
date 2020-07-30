@@ -25,5 +25,7 @@ Route::get('attributes', 'applyController@allAtributeAndCategoryData');
 Route::post('addCategories/submit', 'categoryController@submitCategories');
 Route::get('categories', 'categoryController@allCategoryData');
 Route::post('addAttributes/submit', 'attributeController@submitAttributes');
+Route::post('addUserGroup/submit', 'userGroupController@submitUserGroup');
+Route::get('userGroup', 'userGroupController@allUserGroupData');
 
 

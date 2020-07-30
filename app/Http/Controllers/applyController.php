@@ -39,17 +39,33 @@ class applyController extends Controller
         $applyProduct->picture = $name; 
         $applyProduct->save();
 
+        switch ($req->language) {
+          case "en":
+            $attributeName = $attribute->name_en;
+            break;
+          case "ru":
+            $attributeName = $attribute->name_ru;
+            break;
+          case "lv":
+            $attributeName = $attribute->name_lv;
+            break;
+        }
+
         foreach($attributes as $attribute){
-            if (array_key_exists($attribute->name, $req->productAttributes)){
-                if ($req->productAttributes[$attribute->name]['value'] != null){
+            if (array_key_exists($attributeName, $req->productAttributes)){
+                if ($req->productAttributes[$attributeName]['value'] != null){
                     $productAttribute = new ProductAttribute();
                     $productAttribute->product_id = $applyProduct->id;
-                    $attribute->name = str_replace("_"," ",$attribute->name);
-                    $productAttribute->attribute = $req->productAttributes[$attribute->name]['value'];
-                    $productAttribute->name = $attribute->name;
+                    $attribute->name_en = str_replace(" ","_",$attribute->name_en);
+                    $attribute->name_ru = str_replace(" ","_",$attribute->name_ru);
+                    $attribute->name_lv = str_replace(" ","_",$attribute->name_lv);
+                    $productAttribute->attribute = $req->productAttributes[$attributeName]['value'];
+                    $productAttribute->name_en = $attribute->name_en;
+                    $productAttribute->name_ru = $attribute->name_ru;
+                    $productAttribute->name_lv = $attribute->name_lv;
                     $productAttribute->units = $attribute->units;
 
-                    if ($req->productAttributes[$attribute->name]['isHidden'] == true)
+                    if ($req->productAttributes[$attributeName]['isHidden'] == true)
                         $productAttribute->hidden = true;
                     else
                         $productAttribute->hidden = false;

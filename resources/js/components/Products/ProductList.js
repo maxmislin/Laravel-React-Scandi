@@ -30,12 +30,27 @@ class ProductList extends Component {
     this.props.applyCallback(event.target.value, event.target.checked);
   }
 
+  renderSwitch(lang, item) {
+    switch(lang) {
+      case 'en':
+        return item.name_en;
+      case 'ru':
+        return item.name_ru;
+      case 'lv':
+        return item.name_lv;
+      default:
+        return item.name_en;;
+    }
+  }
+
   render() {
-    const { t } = this.props;
+    const { t, i18n } = this.props;
 
     return (
       <div className="d-flex flex-wrap">
         {this.state.products.map((product) => (
+          this.props.category_ids.includes(product.category_id)
+          &&(
           <div className="card mb-4 shadow-sm">
             <picture>
               <source type="image/webp" srcSet={`images/webp/${product.picture}.webp`} />
@@ -56,7 +71,7 @@ class ProductList extends Component {
                   attribute.product_id === product.id && attribute.hidden === 0
                     && (
                     <li>
-                      {attribute.name}
+                      {this.renderSwitch(i18n.language, attribute)}
                       :
                       {' '}
                       {attribute.attribute}
@@ -72,7 +87,7 @@ class ProductList extends Component {
               <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox} />
             </div>
           </div>
-        ))}
+        )))}
       </div>
     );
   }

@@ -17,7 +17,9 @@ class CreateProductAtributesTable extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->string('attribute');
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_ru');
+            $table->string('name_lv');
             $table->string('units')->nullable();
             $table->boolean('hidden');
             $table->timestamps();

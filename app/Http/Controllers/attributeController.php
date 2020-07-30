@@ -10,7 +10,6 @@ use App\Models\Attribute;
 class attributeController extends Controller
 {
     public function submitAttributes(addAttributeRequest $req) {
-        dd($req);
         $addAttribute = new Attribute();
         $category = Category::where(function ($query) use ($req) {
           $query->where('name_en', '=', $req->categoryName)

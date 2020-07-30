@@ -1,14 +1,17 @@
 {
   "Header": {
     "nav-to-productList": "Список продуктов",
-    "nav-to-productAdd": "Добавить продукт"
+    "nav-to-productAdd": "Добавить продукт",
+    "nav-to-addUserGroup": "Добавить группу пользователей"
   },
   "ProductList": {
     "title": "Список продуктов",
     "mass-delete": "Массовое удаление",
     "card-delte": "Удалить:",
     "card-price": "Цена:",
-    "delete-success": "Продукты удалены!"
+    "delete-success": "Продукты удалены!",
+    "all-products-option": "Все продукты",
+    "user-group-switch": "Группа пользователей:"
   },
   "ProductAdd": {
     "add-success": "Продукт добавлен!",
@@ -48,6 +51,13 @@
     "label-for-unique": "Уникальный(опционально)",
     "label-for-min": "Минимально(опционально)",
     "label-for-max": "Максимально(опционально)",
+    "save-btn": "Сохранить"
+  },
+  "AddUserGroup": {
+    "add-success": "Добавлена группа пользователей!",
+    "title": "Добавить группу пользователей",
+    "user-group-h3": "Группа пользователей",
+    "category-switcher": "Категория",
     "save-btn": "Сохранить"
   }
 }

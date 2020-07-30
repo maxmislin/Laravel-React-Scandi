@@ -7,6 +7,7 @@ import ProductsComponent from './components/Products';
 import ProductAddComponent from './components/ProductAdd';
 import CategoryComponent from './components/Category';
 import AttributeComponent from './components/Attribute';
+import UserGroupComponent from './components/UserGroup';
 import './i18next';
 /*const Header = loadable(() => import('./components/Header'))
 const Products = loadable(() => import('./components/Products'))
@@ -34,6 +35,7 @@ ReactDOM.render(
               <Route path="/apply" exact component={withRouter(ProductAddComponent)} />
               <Route path="/addCategory" exact component={withRouter(CategoryComponent)} />
               <Route path="/addAtribute" exact component={withRouter(AttributeComponent)} />
+              <Route path="/addUserGroup" exact component={withRouter(UserGroupComponent)} />
           </Switch>
         </Suspense>
     </Router>)

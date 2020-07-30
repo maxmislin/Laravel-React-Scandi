@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ProductListComponent from './Products/ProductList';
 import axios from 'axios';
-import ReactDOM from 'react-dom';
 import Errors from './Errors';
 import { withTranslation } from 'react-i18next';
 
@@ -14,12 +13,32 @@ class Products extends Component {
             key: null,
             errors: [],
             success: false,
-            language: null
+            language: null,
+            userGroups: [],
+            userGroupCategories: [],
+            category_ids: [],
+            categories: []
         }
 
+        this.handleChangeSwitcher = this.handleChangeSwitcher.bind(this);
         this.callbackFunction = this.callbackFunction.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
+    }
+
+    componentDidMount() {
+      axios.get('/api/userGroup').then((response) => {
+        this.setState({
+          userGroups: response.data.userGroups,
+          userGroupCategories: response.data.userGroupCategories,
+          categories: response.data.categories
+        });
+        response.data.categories.map(category => {
+          this.state.category_ids.push(category.id);
+        }, this.reload())
+      }).catch((errors) => {
+        console.log(errors);
+      });
     }
 
     callbackFunction(id, checked) {
@@ -33,6 +52,25 @@ class Products extends Component {
 
     reload() {
         this.setState({ key: Math.random() });
+    }
+
+    handleChangeSwitcher(event) {
+      if (event.target.value == 'All products' || event.target.value == 'Все продукты' || event.target.value == 'Visi produkti'){
+        this.state.category_ids = [];
+        this.state.categories.map(category => {
+          this.state.category_ids.push(category.id);
+        }, this.reload())
+      }
+      else{
+        this.state.category_ids = [];
+        this.state.userGroupCategories.map(userGroupCategory => 
+          this.state.userGroups.map(userGroup => {
+            if (event.target.value == userGroup.name_en || event.target.value == userGroup.name_ru || event.target.value == userGroup.name_lv)
+              if (userGroup.id == userGroupCategory.user_group_id)
+                this.state.category_ids.push(userGroupCategory.category_id);
+        }), this.reload())
+      }  
+      event.preventDefault();
     }
 
     handleSubmit(event) {
@@ -64,9 +102,22 @@ class Products extends Component {
       event.preventDefault();
     }
 
-    render() {
-      const { t } = this.props;
+    renderSwitch(lang, item) {
+      switch(lang) {
+        case 'en':
+          return item.name_en;
+        case 'ru':
+          return item.name_ru;
+        case 'lv':
+          return item.name_lv;
+        default:
+          return item.name_en;;
+      }
+    }
 
+    render() {
+      const { t, i18n } = this.props;
+      console.log(this.state);
         return (
             <div className="container">
                 {Object.keys(this.state.errors).length != 0 &&
@@ -87,8 +138,21 @@ class Products extends Component {
                     </div>
                 </div>
 
+                <div className="col-md-3 ml-2">
+                        <label>{t('ProductList.user-group-switch')}</label>
+                            <select className="browser-default custom-select" id="switcher" name="userGroupName" onChange={this.handleChangeSwitcher}>
+                                  <option>{t('ProductList.all-products-option')}</option>
+                                  {this.state.userGroups.map(userGroup => {
+                                    var userGroupName = this.renderSwitch(i18n.language, userGroup);
+                                    return (<option value={userGroupName}>{userGroupName}</option>)
+                                    }
+                                  )
+                                  }
+                            </select>
+                </div>
+
                 <form id="DeleteForm" onSubmit={this.handleSubmit}>
-                <ProductListComponent key={this.state.key} applyCallback = {this.callbackFunction} />
+                <ProductListComponent key={this.state.key} category_ids={this.state.category_ids} applyCallback = {this.callbackFunction} />
                 </form>
             </div>
         );
