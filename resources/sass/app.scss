@@ -32,21 +32,21 @@
 }
 
 .astext {
-  background:none;
-  border:none;
-  margin:0;
-  padding:0;
+  background: none;
+  border: 0;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
 .astext:focus {
-  outline:none;
+  outline: none;
 }
 
 .select-currency {
-  border:none;
-  outline:none;
   background: none;
+  border: 0;
+  outline: none;
 }
 
 .select-currency:active {

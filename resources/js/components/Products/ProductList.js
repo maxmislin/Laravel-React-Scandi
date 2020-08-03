@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import axios from 'axios';
 import { withTranslation } from 'react-i18next';
@@ -108,7 +106,7 @@ class ProductList extends Component {
               <input type="checkbox" name="id[]" value={product.id} onChange={this.handleChangeCheckbox} />
             </div>
           </div>
-        )))}
+          )))}
       </div>
     );
   }

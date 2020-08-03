@@ -10,24 +10,25 @@ use App\Models\ProductAttribute;
 
 class productsController extends Controller
 {
-    public function massDelete(deleteRequest $req) {
+  public function massDelete(deleteRequest $req) {
 
-        foreach($req->id as $id){
-            $attributes = ProductAttribute::where('product_id', '=', $id)->get();
-            $product = Product::find($id);
-            File::delete('images/'.$product->picture);
-            File::delete('images/webp/'.$product->picture.'.webp');
-            $product->delete();
-            foreach($attributes as $attribute){
-                ProductAttribute::find($attribute->id)->delete();
-            }
-        }
+    foreach($req->id as $id){
+      $attributes = ProductAttribute::where('product_id', '=', $id)->get();
+      $product = Product::find($id);
+      File::delete('images/'.$product->picture);
+      File::delete('images/webp/'.$product->picture.'.webp');
+      $product->delete();
+
+      foreach($attributes as $attribute){
+        ProductAttribute::find($attribute->id)->delete();
+      }
     }
+  }
 
-    public function index() {
-        $products = Product::all();
-        $attributes = ProductAttribute::all();
+  public function index() {
+    $products = Product::all();
+    $attributes = ProductAttribute::all();
 
-        return response()->json(array('productData' => $products, 'atributeData' => $attributes));
-    }
+    return response()->json(array('productData' => $products, 'atributeData' => $attributes));
+  }
 }

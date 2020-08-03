@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import axios from 'axios';
 import { withTranslation } from 'react-i18next';
@@ -44,7 +43,7 @@ class FormSwitch extends Component {
   }
 
   renderSwitch(lang, item) {
-    switch(lang) {
+    switch (lang) {
       case 'en':
         return item.name_en;
       case 'ru':
@@ -52,7 +51,7 @@ class FormSwitch extends Component {
       case 'lv':
         return item.name_lv;
       default:
-        return item.name_en;;
+        return item.name_en;
     }
   }
 
@@ -62,27 +61,35 @@ class FormSwitch extends Component {
     return (
       <div className="col-md-3 mb-3">
         {this.state.categories.map((category) => {
-          var categoryName = this.renderSwitch(i18n.language, category);
+          const categoryName = this.renderSwitch(i18n.language, category);
           return (categoryName === this.props.switcher
           && this.state.attributes.map((attribute) => {
-            var attributeName = this.renderSwitch(i18n.language, attribute);
+            const attributeName = this.renderSwitch(i18n.language, attribute);
             return (category.id === attribute.category_id
             && (
               <div>
                 <label htmlFor={categoryName} className="mt-2">{attributeName}</label>
                 {attribute.units != null ? (
-                  <p className="tip">{t('ProductAdd.tip-1')}{attributeName}{t('ProductAdd.tip-2')}{attribute.units}</p>
+                  <p className="tip">
+                    {t('ProductAdd.tip-1')}
+                    {attributeName}
+                    {t('ProductAdd.tip-2')}
+                    {attribute.units}
+                  </p>
                 ) : (
-                  <p>{t('ProductAdd.tip-1')}{attributeName}</p>
+                  <p>
+                    {t('ProductAdd.tip-1')}
+                    {attributeName}
+                  </p>
                 )}
                 <input type="text" className="form-control" name={attributeName} onChange={this.handleChange} required="" />
                 <label htmlFor="hidden" className="mt-2">{t('ProductAdd.label-for-hidden')}</label>
                 <input type="checkbox" className="ml-1" name={attributeName} onChange={this.handleChangeCheckBox} required="" />
               </div>
             )
-          )
-        })
-          )
+            );
+          })
+          );
         })}
       </div>
     );
